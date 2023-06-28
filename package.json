@@ -1,0 +1,44 @@
+{
+  "name": "discord",
+  "version": "1.0.0",
+  "description": "A simple Discord bot made in discord.js typescript",
+  "main": "dist/bot.js",
+  "type": "module",
+  "scripts": {
+    "start": "node dist/bot.js",
+    "build": "npx tsc",
+    "dev": "npx tsc && node dist/bot.js",
+    "watch": "npx tsc -w",
+    "lint": "eslint '*/**/*.{js,ts,tsx}' --quiet --fix",
+    "format": "prettier --write '*/**/*.{js,jsx,ts,tsx}'"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SapphireDevs/discord.git"
+  },
+  "keywords": [
+    "discord",
+    "discordjs",
+    "typescript"
+  ],
+  "author": "Ducko#7068",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/SapphireDevs/discord/issues"
+  },
+  "homepage": "https://github.com/SapphireDevs/discord#readme",
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^5.59.7",
+    "@typescript-eslint/parser": "^5.59.7",
+    "eslint": "^8.41.0",
+    "eslint-config-prettier": "^8.8.0",
+    "eslint-plugin-import": "^2.27.5",
+    "eslint-plugin-prettier": "^4.2.1",
+    "prettier": "^2.8.8",
+    "typescript": "^5.0.4"
+  },
+  "dependencies": {
+    "discord.js": "^14.11.0",
+    "dotenv": "^16.0.3"
+  }
+}
