@@ -31,7 +31,7 @@ If you have any improvements or suggestions, you are welcome to contribute to th
 You can join Sapphire Devs on the following platforms:
 
 - [InstantGaming Referral](https://www.instant-gaming.com/?igr=sapphiredevs)
-- [SapphireDevs Discord](https://discord.gg/rTT52gJC3J)
+- [SapphireDevs Discord](https://discord.gg/sapphiredevs-1044098950455627867)
 - [Personal Discord](https://discord.gg/TKz7BMwEap)
 
 ## Contributors
