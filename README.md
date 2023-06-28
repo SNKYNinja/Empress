@@ -1,5 +1,7 @@
 # Discord.js Bot
 
+[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/J3J1FVEH0)
+
 This is a Discord.js bot developed by Sapphire Devs. It aims to provide a convenient solution for TypeScript users who may be unfamiliar with creating handlers and other TypeScript-specific features.
 
 ## Features
