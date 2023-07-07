@@ -31,4 +31,5 @@ const event: EventInterface = {
         }
     },
 };
+
 export default event;

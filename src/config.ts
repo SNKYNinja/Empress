@@ -9,9 +9,9 @@ export const config: ConfigInterface = {
         green: '#00E09E' as ColorResolvable,
         red: '#FF434E' as ColorResolvable,
     },
-    guilds: [{ name: 'Test Server', id: '1087090760224084018' }],
+    guilds: [{ name: 'Test Server', id: '1000653435391197274' }],
     emojis: {
-        success: '😊',
-        error: '😥',
+        success: '<:icon_correct:1005116658978914435>',
+        error: '<:icon_incorrect:1005149910280175616>',
     },
 };

@@ -1,7 +1,7 @@
 {
-  "name": "discord",
+  "name": "empress",
   "version": "1.0.0",
-  "description": "A simple Discord bot made in discord.js typescript",
+  "description": "A multipurpose Discord bot built on discord.js using TypeScript",
   "main": "dist/bot.js",
   "type": "module",
   "scripts": {

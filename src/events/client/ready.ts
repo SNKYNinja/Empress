@@ -6,7 +6,7 @@ const event: EventInterface = {
     name: Events.ClientReady,
     options: { once: true, rest: false },
     execute: async (client: DiscordClient) => {
-        console.log(`Logged in as ${client.user?.username}`)
+        console.log(`Logged in as ${client.user?.username}`);
     },
 };
 export default event;

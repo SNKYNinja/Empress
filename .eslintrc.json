@@ -23,10 +23,10 @@
       }
     ],
     "no-unused-vars": [
-      "warn",
+      "off",
       {
         "argsIgnorePattern": "^_",
-        "vars": "all"
+        "vars": "no"
       }
     ],
     "no-inner-declarations": "off",
@@ -35,7 +35,9 @@
     // Prettier rules
     "prettier/prettier": [
       "warn",
-      {},
+      {
+        "endOfLine": "auto"
+      },
       {
         "usePrettierrc": true
       }

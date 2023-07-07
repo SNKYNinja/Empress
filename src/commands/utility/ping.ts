@@ -4,7 +4,7 @@ import { ChatInputCommandInteraction, PermissionFlagsBits, SlashCommandBuilder }
 
 const command: CommandInterface = {
     data: new SlashCommandBuilder()
-        .setName('ping')
+        .setName('status')
         .setDescription('Ping bot to see if it is alive')
         .setDefaultMemberPermissions(PermissionFlagsBits.SendMessages)
         .setDMPermission(false),
