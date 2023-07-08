@@ -8,7 +8,7 @@ export interface ConfigInterface {
     };
     guilds: ObjectNameIDArray;
     colors: Object[ColorResolvable];
-    emojis: Object[(...args: any[]) => any];
+    emojis: Object[(...args: string[]) => any];
 }
 
 export interface EventInterface {
@@ -20,6 +20,7 @@ export interface EventInterface {
 export interface CommandInterface {
     subCommand?: string;
     data: SlashCommandBuilder | any;
+    cooldown?: number;
     execute: (...args: any[]) => any;
 }
 

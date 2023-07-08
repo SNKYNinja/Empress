@@ -14,10 +14,14 @@ import { fileURLToPath, pathToFileURL } from 'node:url';
 import path, { dirname } from 'node:path';
 import { readdirSync } from 'node:fs';
 
+import { connect } from 'mongoose';
+import chalk from 'chalk';
+
 export class DiscordClient extends Client {
     public commands: Collection<string, CommandInterface>;
     public subcommands: Collection<string, CommandInterface>;
     public events: Collection<string, EventInterface>;
+    public cooldowns: Collection<string, number>;
     public config: ConfigInterface;
     constructor() {
         super({
@@ -57,18 +61,26 @@ export class DiscordClient extends Client {
         this.subcommands = new Collection();
         this.events = new Collection();
         this.config = config;
+        this.cooldowns = new Collection();
     }
 
     public async loadClient() {
         try {
             await this.loadCommands();
             await this.loadEvents();
+            this.connectDatabase(process.env.DATABASE_URL);
             this.loadErrorLog();
 
             this.login(this.config.bot.token);
         } catch (error) {
-            console.error(`Error logging in:`, error);
+            console.error(chalk.red.bold(`[Load Client Error]`), error);
         }
+    }
+
+    private async connectDatabase(databaseURL: string) {
+        connect(databaseURL).then(() => {
+            console.log(`${chalk.blueBright.bold('[INFO]')} Database Connected!`);
+        });
     }
 
     private async loadCommands() {
@@ -113,6 +125,7 @@ export class DiscordClient extends Client {
                 });
         });
     }
+
     private async loadEvents() {
         await Promise.all(
             readdirSync(`${dirname(fileURLToPath(import.meta.url))}/events`).map(async (folder) => {
@@ -142,6 +155,7 @@ export class DiscordClient extends Client {
             })
         );
     }
+
     private loadErrorLog() {
         process.on('unhandledRejection', (reason, promise) => {
             console.log(' [Error_Handling] :: Unhandled Rejection/Catch');

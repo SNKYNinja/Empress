@@ -11,7 +11,7 @@ const event: EventInterface = {
         if (!command) {
             return interaction.reply({
                 content: `${client.config.emojis.error} oh no! And error occured :(`,
-                ephemeral: true,
+                ephemeral: true
             });
         }
 
@@ -26,10 +26,10 @@ const event: EventInterface = {
         } catch (error) {
             return interaction.reply({
                 content: `${client.config.emojis.error} oh no! And error occured :(`,
-                ephemeral: true,
+                ephemeral: true
             });
         }
-    },
+    }
 };
 
 export default event;
