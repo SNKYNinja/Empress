@@ -15,6 +15,7 @@ const command: SubCommandInterface = {
                     options.setName('target').setDescription('Provide a user').setRequired(true)
                 )
         )
+        .addSubcommand((subcommand) => subcommand.setName('server').setDescription("Display the server's info"))
 };
 
 export default command;

@@ -13,6 +13,8 @@ export const config: ConfigInterface = {
     emojis: {
         success: '<:icon_correct:1005116658978914435>',
         error: '<:icon_incorrect:1005149910280175616>',
-        reply: '<:reply:1001495577093230753>'
+        reply: '<:reply:1001495577093230753>',
+        greenTick: '<:green_check:1048266995008806972>',
+        redCross: '<:red_cross:1048305078651605072>'
     }
 };
