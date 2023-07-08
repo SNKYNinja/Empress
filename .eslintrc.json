@@ -14,7 +14,9 @@
   "rules": {
     // Base rules
     "no-undef": ["off"],
+    // "quotes": ["warn", "double"], 
     "camelcase": ["warn"],
+    // "newline-per-chained-call": "off",
     "arrow-spacing": [
       "error",
       {

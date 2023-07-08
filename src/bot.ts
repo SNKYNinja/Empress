@@ -6,7 +6,7 @@ import {
     Collection,
     Events,
     GatewayIntentBits,
-    Partials,
+    Partials
 } from 'discord.js';
 import { config } from './config.js';
 
@@ -40,7 +40,7 @@ export class DiscordClient extends Client {
                 GatewayIntentBits.GuildVoiceStates,
                 GatewayIntentBits.GuildWebhooks,
                 GatewayIntentBits.Guilds,
-                GatewayIntentBits.MessageContent,
+                GatewayIntentBits.MessageContent
             ],
             partials: [
                 Partials.Channel,
@@ -49,8 +49,8 @@ export class DiscordClient extends Client {
                 Partials.Message,
                 Partials.Reaction,
                 Partials.ThreadMember,
-                Partials.User,
-            ],
+                Partials.User
+            ]
         });
 
         this.commands = new Collection();
@@ -85,8 +85,8 @@ export class DiscordClient extends Client {
                                 await import(
                                     `${pathToFileURL(
                                         path.resolve(
-                                            `${dirname(fileURLToPath(import.meta.url))}/commands/${folder}/${file}`,
-                                        ),
+                                            `${dirname(fileURLToPath(import.meta.url))}/commands/${folder}/${file}`
+                                        )
                                     )}`
                                 )
                             ).default;
@@ -99,9 +99,9 @@ export class DiscordClient extends Client {
                             } else {
                                 commandsArray.push(command.data.toJSON());
                             }
-                        }),
+                        })
                 );
-            }),
+            })
         );
 
         this.on(Events.ClientReady, async () => {
@@ -124,8 +124,8 @@ export class DiscordClient extends Client {
                                 await import(
                                     `${pathToFileURL(
                                         path.resolve(
-                                            `${dirname(fileURLToPath(import.meta.url))}/events/${folder}/${file}`,
-                                        ),
+                                            `${dirname(fileURLToPath(import.meta.url))}/events/${folder}/${file}`
+                                        )
                                     )}`
                                 )
                             ).default;
@@ -137,9 +137,9 @@ export class DiscordClient extends Client {
                             }
 
                             this.events.set(event.name, event);
-                        }),
+                        })
                 );
-            }),
+            })
         );
     }
     private loadErrorLog() {

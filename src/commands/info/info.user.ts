@@ -1,59 +1,101 @@
+import addBadges from '../../functions/getBadges.js';
 import { DiscordClient } from '../../bot.js';
 import { SubCommand } from '../../typings/index';
-import { ChatInputCommandInteraction, EmbedBuilder } from 'discord.js';
+import {
+    ActionRowBuilder,
+    ButtonBuilder,
+    ButtonStyle,
+    ChatInputCommandInteraction,
+    EmbedBuilder,
+    GuildMember,
+    Role,
+    User
+} from 'discord.js';
 
 const command: SubCommand = {
     subCommand: 'info.user',
     execute: async (interaction: ChatInputCommandInteraction, client: DiscordClient) => {
-        const { options, guild } = interaction;
-        const user = await options.getUser('target')?.fetch();
-        if (!user) {
-            return interaction.reply({
-                embeds: [
-                    new EmbedBuilder()
-                        .setColor(client.config.colors.red)
-                        .setDescription(`${client.config.emojis.error} oh no! And error occured :(`),
-                ],
-                ephemeral: true,
-            });
+        await interaction.deferReply();
+        const user = (await interaction.options.getUser('target')?.fetch()) as User;
+        const member = interaction.options.getMember('target') as GuildMember;
+
+        function displayHex(member: GuildMember) {
+            if (member.displayHexColor === '#000000') return '#2F3136';
+            return member.displayHexColor;
         }
 
-        let embed = new EmbedBuilder()
-            .setAuthor({ name: user.username, iconURL: user.displayAvatarURL() })
-            .setThumbnail(user.displayAvatarURL())
-            .setColor(user.hexAccentColor || client.config.colors.theme)
-            .addFields({
-                name: 'General',
-                value: [
-                    `> **User:** ${user.username}`,
-                    `> **ID:** ${user.id}`,
-                    `> **Mention:** ${user}`,
-                    `> **Created:** <t:${Math.round(user.createdTimestamp! / 1000)}:R>`,
-                ].join('\n'),
-            });
+        const hexColor = displayHex(member);
+        const roles = member?.roles?.cache
+            .sort((a: Role, b: Role) => b.position - a.position)
+            .map((role) => role)
+            .filter((role) => role.name !== '@everyone');
 
-        if (user.bannerURL()) {
-            embed.setImage(user.bannerURL({ size: 1024 }) as string);
+        let roleString: string;
+        if (roles.length > 1) roleString = roles.join('').replace('@everyone', '');
+        else roleString = 'None';
+
+        const joinedServer: number = Math.floor((member.joinedTimestamp as number) / 1000);
+        const joinedDiscord = Math.floor(user.createdTimestamp / 1000);
+
+        const booster = member?.premiumSince
+            ? '<:discordboost7:1091276425732030566>'
+            : '<:red_cross:1048305078651605072>';
+
+        const userBadges = user.flags?.toArray();
+
+        const bannerURL = user.bannerURL({ size: 2048, extension: 'jpeg' });
+
+        const responseEmbed = new EmbedBuilder()
+            .setColor(hexColor)
+            .setAuthor({
+                name: `${user.username} | ${user.id}`,
+                iconURL: user?.displayAvatarURL()
+            })
+            .addFields(
+                {
+                    name: '`✦` Badges',
+                    value: `<:reply:1001495577093230753> ${addBadges(userBadges, user).join('')}`,
+                    inline: true
+                },
+                {
+                    name: '`✦` Booster',
+                    value: `${client.config.emojis.reply} ${booster}`,
+                    inline: true
+                },
+                {
+                    name: `\`✦\` Roles (${roles.length})`,
+                    value: `${client.config.emojis.reply} ${roleString}`,
+                    inline: false
+                },
+                {
+                    name: '`✦` Joined Server',
+                    value: `${client.config.emojis.reply} <t:${joinedServer}:D>`,
+                    inline: true
+                },
+                {
+                    name: '`✦` Joined Discord',
+                    value: `${client.config.emojis.reply} <t:${joinedDiscord}:D>`,
+                    inline: true
+                }
+            );
+
+        const Row = new ActionRowBuilder<ButtonBuilder>().addComponents(
+            new ButtonBuilder().setStyle(ButtonStyle.Link).setLabel('Avatar').setURL(member.displayAvatarURL())
+        );
+        if (bannerURL) {
+            responseEmbed.setImage(bannerURL as string);
+            Row.addComponents(
+                new ButtonBuilder()
+                    .setStyle(ButtonStyle.Link)
+                    .setLabel('Banner')
+                    .setURL(bannerURL as string)
+            );
         }
 
-        const member = await guild?.members.cache.get(user.id)?.fetch();
-        if (member) {
-            embed.addFields({
-                name: `Server`,
-                value: [
-                    `> **Display Name:** \`${member.displayName}\``,
-                    `> **Display Hex Color:** \`${member.displayHexColor}\``,
-                    `> **Nickname:** ${member.nickname ? member.nickname : 'None'}`,
-                    `> **isManageable:** ${member.manageable}`,
-                    `> **isModeratable:** ${member.moderatable}`,
-                    `> **isBannable:** ${member.bannable}`,
-                    `> **isKickable:** ${member.kickable}`,
-                    `> **Joined:** <t:${Math.round(member.joinedTimestamp! / 1000)}:R>`,
-                ].join('\n'),
-            });
-        }
-
-        interaction.reply({ embeds: [embed], ephemeral: true });
-    },
+        interaction.editReply({
+            embeds: [responseEmbed],
+            components: [Row]
+        });
+    }
 };
 export default command;

@@ -5,7 +5,7 @@
   "main": "dist/bot.js",
   "type": "module",
   "scripts": {
-    "start": "node dist/bot.js",
+    "start": "npm run build && node dist/bot.js",
     "build": "npx tsc",
     "dev": "npx tsc && node dist/bot.js",
     "watch": "npx tsc -w",

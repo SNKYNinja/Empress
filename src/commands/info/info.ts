@@ -12,9 +12,9 @@ const command: SubCommandInterface = {
                 .setName('user')
                 .setDescription("Display the user's info")
                 .addUserOption((options) =>
-                    options.setName('target').setDescription('Provide a user').setRequired(true),
-                ),
-        ),
+                    options.setName('target').setDescription('Provide a user').setRequired(true)
+                )
+        )
 };
 
 export default command;
