@@ -1,5 +1,20 @@
 import { SlashCommandBuilder, ClientEvents, PermissionFlagsBits, ColorResolvable } from 'discord.js';
 
+export interface ChartColorOptions {
+    default: string;
+    half: string;
+    quarter: string;
+    low: string;
+    zero: string;
+}
+
+export interface ChartColorPallete {
+    purple: ChartColorOptions;
+    indigo: ChartColorOptions;
+    green: ChartColorOptions;
+    blurple: ChartColorOptions;
+}
+
 export type ObjectNameIDArray = Array[{ name: string; id: string }];
 
 export interface ConfigInterface {
@@ -7,8 +22,13 @@ export interface ConfigInterface {
         token: string;
     };
     guilds: ObjectNameIDArray;
-    colors: Object[ColorResolvable];
-    emojis: Object[(...args: string[]) => any];
+    colors: {
+        [key: string]: ColorResolvable;
+    };
+    chartColors: ChartColorPallete;
+    emojis: {
+        [key: string]: string;
+    };
 }
 
 export interface EventInterface {
