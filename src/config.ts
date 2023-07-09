@@ -9,6 +9,36 @@ export const config: ConfigInterface = {
         green: '#00E09E' as ColorResolvable,
         red: '#FF434E' as ColorResolvable
     },
+    chartColors: {
+        purple: {
+            default: 'rgba(149, 76, 233, 1)',
+            half: 'rgba(149, 76, 233, 0.5)',
+            quarter: 'rgba(149, 76, 233, 0.25)',
+            low: 'rgba(149, 76, 233, 0.1)',
+            zero: 'rgba(149, 76, 233, 0)'
+        },
+        indigo: {
+            default: 'rgba(80, 102, 120, 1)',
+            half: 'rgba(80, 102, 120, 0.5)',
+            quarter: 'rgba(80, 102, 120, 0.25)',
+            low: 'rgba(80, 102, 120, 0.1)',
+            zero: 'rgba(80, 102, 120, 0)'
+        },
+        green: {
+            default: 'rgba(92, 221, 139, 1)',
+            half: 'rgba(92, 221, 139, 0.5)',
+            quarter: 'rgba(92, 221, 139, 0.25)',
+            low: 'rgba(92, 221, 139, 0.1)',
+            zero: 'rgba(92, 221, 139, 0)'
+        },
+        blurple: {
+            default: 'rgba(88, 101, 242, 1)',
+            half: 'rgba(88, 101, 242, 0.5)',
+            quarter: 'rgba(88, 101, 242, 0.25)',
+            low: 'rgba(88, 101, 242, 0.1)',
+            zero: 'rgba(88, 101, 242, 0)'
+        }
+    },
     guilds: [{ name: 'Test Server', id: '1000653435391197274' }],
     emojis: {
         success: '<:icon_correct:1005116658978914435>',
