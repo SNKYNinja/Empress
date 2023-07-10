@@ -1,4 +1,4 @@
-import { ConfigInterface, EventInterface, CommandInterface, ObjectNameIDArray } from './typings/index';
+import { ConfigInterface, EventInterface, CommandInterface, ObjectNameIDArray, ButtonInterface } from './typings/index';
 import {
     ApplicationCommandDataResolvable,
     Client,
@@ -21,6 +21,7 @@ export class DiscordClient extends Client {
     public commands: Collection<string, CommandInterface>;
     public subcommands: Collection<string, CommandInterface>;
     public events: Collection<string, EventInterface>;
+    public buttons: Collection<string, ButtonInterface>;
     public cooldowns: Collection<string, number>;
     public config: ConfigInterface;
     constructor() {
@@ -60,6 +61,7 @@ export class DiscordClient extends Client {
         this.commands = new Collection();
         this.subcommands = new Collection();
         this.events = new Collection();
+        this.buttons = new Collection();
         this.config = config;
         this.cooldowns = new Collection();
     }
@@ -68,6 +70,7 @@ export class DiscordClient extends Client {
         try {
             await this.loadCommands();
             await this.loadEvents();
+            await this.loadButtons();
             this.connectDatabase(process.env.DATABASE_URL);
             this.loadErrorLog();
 
@@ -150,6 +153,26 @@ export class DiscordClient extends Client {
                             }
 
                             this.events.set(event.name, event);
+                        })
+                );
+            })
+        );
+    }
+
+    private async loadButtons() {
+        const buttonsDirectory = `${dirname(fileURLToPath(import.meta.url))}/buttons`;
+
+        await Promise.all(
+            readdirSync(buttonsDirectory).map(async (folder) => {
+                await Promise.all(
+                    readdirSync(`${buttonsDirectory}/${folder}`)
+                        .filter((file) => file.endsWith('.js' || '.ts'))
+                        .map(async (file) => {
+                            const button: ButtonInterface = (
+                                await import(`${pathToFileURL(path.resolve(`${buttonsDirectory}/${folder}/${file}`))}`)
+                            ).default;
+
+                            this.buttons.set(button.id, button);
                         })
                 );
             })

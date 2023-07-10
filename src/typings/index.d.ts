@@ -53,3 +53,8 @@ export interface SubCommand {
     subCommand: string;
     execute: (...args: any[]) => any;
 }
+
+export interface ButtonInterface {
+    id: string;
+    execute: (...args: any[]) => any;
+}
