@@ -2,7 +2,7 @@ import { DiscordClient } from '../../bot.js';
 import { EventInterface } from '../../typings/index.js';
 import { Events, ActivityType, PresenceUpdateStatus, ActivitiesOptions } from 'discord.js';
 import chalk from 'chalk';
-import DB from '../../schemas/clientDB.js';
+import DB from '../../schemas/client.db.js';
 import boxen from 'boxen';
 
 const event: EventInterface = {

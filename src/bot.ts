@@ -12,7 +12,7 @@ import { config } from './config.js';
 
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import path, { dirname } from 'node:path';
-import { readdirSync } from 'node:fs';
+import { read, readdirSync } from 'node:fs';
 
 import { connect } from 'mongoose';
 import chalk from 'chalk';
@@ -161,6 +161,12 @@ export class DiscordClient extends Client {
 
     private async loadButtons() {
         const buttonsDirectory = `${dirname(fileURLToPath(import.meta.url))}/buttons`;
+
+        try {
+            if (!readdirSync(buttonsDirectory)) return;
+        } catch (e: any) {
+            return;
+        }
 
         await Promise.all(
             readdirSync(buttonsDirectory).map(async (folder) => {

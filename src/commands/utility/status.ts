@@ -12,7 +12,7 @@ import {
 
 import os from 'os';
 
-import DB from '../../schemas/clientDB.js';
+import DB from '../../schemas/client.db.js';
 
 import { ChartConfiguration, ChartData } from 'chart.js';
 import { ChartJSNodeCanvas } from 'chartjs-node-canvas';
