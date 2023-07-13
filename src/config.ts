@@ -45,6 +45,7 @@ export const config: ConfigInterface = {
         error: '<:icon_incorrect:1005149910280175616>',
         reply: '<:reply:1001495577093230753>',
         greenTick: '<:green_check:1048266995008806972>',
-        redCross: '<:red_cross:1048305078651605072>'
+        redCross: '<:red_cross:1048305078651605072>',
+        announce: '<:blurple_announcement:1030340123788836955>'
     }
 };

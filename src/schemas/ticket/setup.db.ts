@@ -6,18 +6,25 @@ interface ITicketSetup {
     category: string;
     transcript: string;
     roles: string[];
-    message: string;
-    ticket: string;
+    description: string;
+    messageId: string;
 }
 
+const arrLimit = (arr: Array<string>) => {
+    return arr.length <= 3;
+};
+
 const ticketSetupSchema = new Schema<ITicketSetup>({
-    guildId: String,
+    guildId: { type: String, required: true },
     channel: String,
     category: String,
     transcript: String,
-    roles: [String],
-    message: String,
-    ticket: String
+    roles: {
+        type: [String],
+        validate: [arrLimit, 'Cannot add more than 3 roles!']
+    },
+    description: String,
+    messageId: String
 });
 
 export default model('ticketSetup', ticketSetupSchema, 'ticketSetup');
