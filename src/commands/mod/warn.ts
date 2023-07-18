@@ -23,7 +23,7 @@ const command: SubCommandInterface = {
                 .setName('remove')
                 .setDescription('Remove a warn from a user')
                 .addStringOption((option) =>
-                    option.setName('warn_id').setDescription('The ID of the Warn to remove').setRequired(true)
+                    option.setName('warn_id').setDescription('The ID of the warn to remove').setRequired(true)
                 )
         )
 };
