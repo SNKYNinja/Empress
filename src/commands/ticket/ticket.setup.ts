@@ -6,29 +6,23 @@ import {
     ChatInputCommandInteraction,
     EmbedBuilder,
     Guild,
-    GuildTextBasedChannel
+    TextChannel
 } from 'discord.js';
 import { SubCommand } from 'typings';
-import DB from '../../schemas/ticket.setup.db.js';
+import DB from '../../schemas/ticket/setup.db.js';
 
 const command: SubCommand = {
     subCommand: 'ticket.setup',
     execute: async (interaction: ChatInputCommandInteraction, client: DiscordClient) => {
         const guild = interaction.guild as Guild;
 
-        const channel = interaction.options.getChannel('channel') as GuildTextBasedChannel;
+        const channel = interaction.options.getChannel('channel') as TextChannel;
         const transcript = interaction.options.getChannel('transcript');
         const category = interaction.options.getChannel('category');
-        const role = interaction.options.getRole('role');
+        const role = interaction.options.getRole('role')!;
         const message = interaction.options.getString('message') || ' ';
 
         const Data = await DB.findOne({ guildId: guild.id });
-
-        if (Data) {
-            const ticketChannel = guild.channels.cache.get(Data.channel) as GuildTextBasedChannel;
-            const ticketMessage = await ticketChannel?.messages.fetch(Data.ticket);
-            ticketMessage.delete();
-        }
 
         const ticketEmbed = new EmbedBuilder()
             .setColor('#2F3136')
@@ -56,12 +50,14 @@ const command: SubCommand = {
                 channel: channel?.id,
                 transcript: transcript?.id,
                 category: category?.id,
-                $push: { roles: role?.id },
-                message: message,
-                ticket: replyMessage.id
+                $set: { roles: [role.id] },
+                description: message,
+                messageId: replyMessage.id
             },
             { new: true, upsert: true }
-        );
+        )
+            // .then((data) => console.log(data))
+            .catch((err) => console.log(err));
     }
 };
 
