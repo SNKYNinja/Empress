@@ -13,10 +13,10 @@ import {
 type Interaction = ChatInputCommandInteraction | ButtonInteraction | StringSelectMenuInteraction;
 
 export default class EmbedPaginator {
-    public client: DiscordClient;
-    public interaction: Interaction;
-    public embeds: EmbedBuilder[];
-    public pages: { id?: number };
+    public readonly client: DiscordClient;
+    public readonly interaction: Interaction;
+    public readonly embeds: EmbedBuilder[];
+    public readonly pages: { id?: number };
     public disableTime: number;
     public ephemeral: boolean;
     constructor(client: DiscordClient, interaction: Interaction, embeds: EmbedBuilder[]) {

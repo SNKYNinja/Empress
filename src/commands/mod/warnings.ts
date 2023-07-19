@@ -41,7 +41,7 @@ const command: CommandInterface = {
             const chunk = userWarns.slice(i, i + chunkSize);
             chunk.forEach((warning) =>
                 logEmbed.addFields({
-                    name: `Case ID: \`${warning._id}\``,
+                    name: `__Case ID:__ \`${warning._id}\``,
                     value: `
                         • **Reason:** ${warning.reason}
                         • **Moderator:** <@${warning.moderator}>

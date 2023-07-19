@@ -27,4 +27,4 @@ const ticketSetupSchema = new Schema<ITicketSetup>({
     messageId: String
 });
 
-export default model('ticketSetup', ticketSetupSchema, 'ticketSetup');
+export default model('TicketSetup', ticketSetupSchema, 'ticketSetup');
