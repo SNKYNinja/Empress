@@ -128,7 +128,7 @@ const command: CommandInterface = {
                     .setTitle(`${anime.titles[3].title} | ${anime.titles[2].title}`)
                     .setURL(anime.url)
                     .setColor('#2F3136')
-                    .setAuthor({ name: client.user?.username!, iconURL: client.user?.avatarURL()! })
+                    .setAuthor({ name: client.user?.username!, iconURL: client.user?.displayAvatarURL() })
                     .setThumbnail(anime.images.jpg.large_image_url)
                     .setDescription(anime.synopsis)
                     .addFields([

@@ -88,7 +88,7 @@ export default class EmbedPaginator {
 
         this.embeds[this.pages[id]].setFooter({
             text: this.interaction.user.username,
-            iconURL: this.interaction.user.avatarURL()!
+            iconURL: this.interaction.user.displayAvatarURL()
         });
 
         const responseEmbed = await this.interaction.reply({
@@ -134,7 +134,7 @@ export default class EmbedPaginator {
 
             this.embeds[this.pages[id]].setFooter({
                 text: this.interaction.user.username,
-                iconURL: this.interaction.user.avatarURL()!
+                iconURL: this.interaction.user.displayAvatarURL()
             });
 
             await this.interaction.editReply({

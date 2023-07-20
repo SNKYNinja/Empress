@@ -22,7 +22,7 @@ const command: CommandInterface = {
 
         const ErrorEmbed = new EmbedBuilder()
             .setColor('Red')
-            .setAuthor({ name: interaction.user.username, iconURL: interaction.user.avatarURL()! })
+            .setAuthor({ name: interaction.user.username, iconURL: interaction.user.displayAvatarURL() })
             .setTimestamp();
 
         try {
@@ -35,7 +35,7 @@ const command: CommandInterface = {
                 .setURL(song.url)
                 .setThumbnail(song.image)
                 .setDescription(lyrics)
-                .setFooter({ text: interaction.user.username, iconURL: interaction.user.avatarURL()! })
+                .setFooter({ text: interaction.user.username, iconURL: interaction.user.displayAvatarURL() })
                 .setTimestamp()
                 .setAuthor({
                     name: 'Powered by Genius',

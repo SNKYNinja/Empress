@@ -35,7 +35,7 @@ const command: CommandInterface = {
         for (let i = 0; i < userWarns.length; i += chunkSize) {
             const logEmbed = new EmbedBuilder()
                 .setColor('#2F3136')
-                .setAuthor({ name: `${user.username} | ${user.id}`, iconURL: user.avatarURL()! })
+                .setAuthor({ name: `${user.username} | ${user.id}`, iconURL: user.displayAvatarURL() })
                 .setThumbnail(user.avatarURL());
 
             const chunk = userWarns.slice(i, i + chunkSize);

@@ -9,3 +9,6 @@ node_modules
 
 # VS Code
 .vscode
+
+# Misc Files
+src/commands/ticket/ticket.ts
