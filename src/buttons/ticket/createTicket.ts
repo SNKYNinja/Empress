@@ -76,13 +76,12 @@ const button: ButtonInterface = {
 
         const rolesToMention = [userMention(user.id), ...roles.map((role) => roleMention(role.id))];
 
-        const maxTicket = await ticketsDB.findOne().sort('-ticketId').exec();
-        const ticketId = maxTicket ? maxTicket.ticketId + 1 : 1;
+        const ticketId = (await ticketsDB.countDocuments({ guildId: guild.id })) + 1;
 
         await guild.channels
             .create({
                 name: `〢ticket-${ticketId}`,
-                topic: `**User**: ${userMention(user.id)}\n**Ticket ID**:${ticketId}`,
+                topic: `**User**: ${userMention(user.id)}\n **Ticket ID**:${ticketId}`,
                 parent: setupData.category,
                 type: ChannelType.GuildText,
                 rateLimitPerUser: 2,
@@ -128,7 +127,8 @@ const button: ButtonInterface = {
                     channelId: channel.id,
                     ownerId: user.id,
                     ticketId: ticketId,
-                    membersId: [user.id]
+                    membersId: [user.id],
+                    createdAt: Math.floor(Date.now() / 1000)
                 });
 
                 const resEmbed = new EmbedBuilder()

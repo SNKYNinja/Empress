@@ -61,16 +61,11 @@ const button: ButtonInterface = {
                 ephemeral: true
             });
 
-        if (ticketData.membersId.length > 0) {
-            // ticketData.membersId.forEach((m) => {
-            //     channel.permissionOverwrites.edit(m, { SendMessages: false });
-            // });
-            Promise.all(
-                ticketData.membersId.map((m) => {
-                    return channel.permissionOverwrites.edit(m, { SendMessages: false });
-                })
-            );
-        }
+        Promise.all(
+            ticketData.membersId.map((m) => {
+                return channel.permissionOverwrites.edit(m, { SendMessages: false });
+            })
+        );
 
         const buttonsRow = new ActionRowBuilder<ButtonBuilder>();
         for (let component of interaction.message.components[0].components) {

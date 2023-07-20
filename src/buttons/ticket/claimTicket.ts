@@ -62,7 +62,8 @@ const button: ButtonInterface = {
 
         if (user.id === ticketData.ownerId)
             return interaction.reply({
-                embeds: [ErrorEmbed.setDescription(`${client.config.emojis.error} ***Cannot claim your own ticket***`)]
+                embeds: [ErrorEmbed.setDescription(`${client.config.emojis.error} ***Cannot claim your own ticket***`)],
+                ephemeral: true
             });
 
         if (ticketData.claimed)
