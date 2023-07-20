@@ -1,12 +1,12 @@
 import { Schema, model } from 'mongoose';
 
 interface ITicketSetup {
+    active: boolean;
     guildId: string;
     channel: string;
     category: string;
     transcript: string;
     roles: string[];
-    description: string;
     messageId: string;
 }
 
@@ -15,6 +15,7 @@ const arrLimit = (arr: Array<string>) => {
 };
 
 const ticketSetupSchema = new Schema<ITicketSetup>({
+    active: { type: Boolean, default: true },
     guildId: { type: String, required: true },
     channel: String,
     category: String,
@@ -23,7 +24,6 @@ const ticketSetupSchema = new Schema<ITicketSetup>({
         type: [String],
         validate: [arrLimit, 'Cannot add more than 3 roles!']
     },
-    description: String,
     messageId: String
 });
 

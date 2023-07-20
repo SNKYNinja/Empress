@@ -10,6 +10,7 @@ interface IGuildTickets {
     claimed: boolean;
     claimedBy: string;
     closed: boolean;
+    createdAt: number;
 }
 
 const arrLimit = (arr: Array<string>) => {
@@ -21,11 +22,12 @@ const guildTicketsSchema = new Schema<IGuildTickets>({
     guildId: { type: String, required: true },
     ownerId: { type: String, required: true },
     membersId: { type: [String], validate: [arrLimit, 'Cannot add more than 4 members(including owner)'] },
-    channelId: String,
+    channelId: { type: String, required: true },
     locked: { type: Boolean, default: false },
     claimed: { type: Boolean, default: false },
-    claimedBy: String,
-    closed: { type: Boolean, default: false }
+    claimedBy: { type: String },
+    closed: { type: Boolean, default: false },
+    createdAt: { type: Number, required: true }
 });
 
 const GuildTicket = model('GuildTicket', guildTicketsSchema);
