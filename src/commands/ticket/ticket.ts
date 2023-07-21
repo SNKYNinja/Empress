@@ -45,6 +45,10 @@ const command: SubCommandInterface = {
                         .setRequired(false)
                 )
         )
+        .addSubcommand((subcommand) => 
+            subcommand
+                .setName('config')
+                .setDescription('Configure ticket system settings'))
         .addSubcommand((subcommand) =>
             subcommand
                 .setName('delete')
