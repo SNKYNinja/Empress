@@ -7,10 +7,13 @@ import {
     EmbedBuilder,
     TextChannel,
     ComponentType,
-    userMention
+    userMention,
+    AttachmentBuilder
 } from 'discord.js';
 import { ButtonInterface } from 'typings';
+
 import { createTranscript, ExportReturnType } from 'discord-html-transcripts';
+import prettier from 'prettier';
 
 import setupDB from '../../schemas/ticket/setup.db.js';
 import ticketsDB from '../../schemas/ticket/tickets.db.js';
@@ -115,18 +118,25 @@ const button: ButtonInterface = {
                 ticketData.closed = true;
                 await ticketData.save();
 
-                interaction.deleteReply();
-
                 const owner = b.guild?.members.cache.get(ticketData.ownerId)!;
                 const transcriptChannel = b.guild?.channels.cache.get(setupData.transcript)! as TextChannel;
 
-                const attachement = await createTranscript(channel, {
-                    limit: -1,
-                    returnType: ExportReturnType.Attachment,
-                    saveImages: true,
-                    filename: `transcript-${ticketData.ticketId}-${owner.id}.html`,
-                    favicon: 'guild',
-                    poweredBy: false
+                const transcript =
+                    '<!DOCTYPE html>' +
+                    (await createTranscript(channel, {
+                        limit: -1,
+                        returnType: ExportReturnType.String,
+                        saveImages: true,
+                        favicon: 'guild',
+                        poweredBy: false
+                    }));
+
+                const formatted = prettier.format(addPrettierIgnore(transcript), { parser: 'html' });
+
+                const buffer = Buffer.from(formatted, 'utf-8');
+
+                const attachement = new AttachmentBuilder(buffer, {
+                    name: `transcript-${ticketData.ticketId}-${owner.id}.html`
                 });
 
                 const transcriptEmbed = new EmbedBuilder()
@@ -145,8 +155,10 @@ const button: ButtonInterface = {
                 setTimeout(() => {
                     if (channel.deletable) channel.delete();
                 }, 5 * 1000);
+
+                collector.stop();
             } else {
-                return interaction.deleteReply();
+                collector.stop();
             }
         });
 
@@ -157,3 +169,17 @@ const button: ButtonInterface = {
 };
 
 export default button;
+
+function addPrettierIgnore(html: string): string {
+    const bodyTagRegex = /<body[^>]*>/i;
+    const match = bodyTagRegex.exec(html);
+    if (match) {
+        const bodyTagIndex = match.index;
+        // Insert the prettier-ignore comment just before the <body> tag
+        const modifiedHtml = html.slice(0, bodyTagIndex) + '<!-- prettier-ignore -->' + html.slice(bodyTagIndex);
+        return modifiedHtml;
+    } else {
+        // If <body> tag is not found, return the original HTML
+        return html;
+    }
+}
