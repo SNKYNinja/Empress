@@ -6,6 +6,8 @@ declare global {
             DISCORD_TOKEN: string;
             DATABASE_URL: string;
             GENIUS_SECRET: string;
+            SPOTIFY_ID: string;
+            SPOTIFY_SECRET: string;
             NODE_ENV: 'development' | 'production';
         }
     }

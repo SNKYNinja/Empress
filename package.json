@@ -5,10 +5,10 @@
   "main": "dist/bot.js",
   "type": "module",
   "scripts": {
-    "start": "npm run build && node dist/bot.js",
-    "build": "npx tsc",
+    "start": "node dist/bot.js",
+    "prestart": "rimraf dist && npx tsc",
     "dev": "npx tsc && node dist/bot.js",
-    "watch": "npx tsc -w",
+    "watch": "npx tsc -w & nodemon dist/bot.js",
     "lint": "eslint '*/**/*.{js,ts,tsx}' --quiet --fix",
     "format": "prettier --write '*/**/*.{js,jsx,ts,tsx}'"
   },
@@ -29,24 +29,32 @@
   "homepage": "https://github.com/SapphireDevs/discord#readme",
   "devDependencies": {
     "@types/node": "^20.4.1",
+    "@types/prettier": "^2.7.3",
     "@typescript-eslint/eslint-plugin": "^5.59.7",
     "@typescript-eslint/parser": "^5.59.7",
     "eslint": "^8.41.0",
     "eslint-config-prettier": "^8.8.0",
     "eslint-plugin-import": "^2.27.5",
     "eslint-plugin-prettier": "^4.2.1",
+    "nodemon": "^3.0.1",
     "prettier": "^2.8.8",
+    "rimraf": "^5.0.1",
     "typescript": "^5.0.4"
   },
   "dependencies": {
+    "axios": "^1.4.0",
     "boxen": "^7.1.1",
     "chalk": "^5.3.0",
     "chart.js": "^3.9.1",
     "chartjs-node-canvas": "^4.1.6",
     "chartjs-plugin-gradient": "^0.5.0",
+    "discord-html-transcripts": "^3.1.4",
     "discord.js": "^14.11.0",
     "dotenv": "^16.0.3",
     "genius-lyrics": "^4.4.3",
-    "mongoose": "^7.3.2"
+    "mongoose": "^7.3.2",
+    "node-fetch": "^3.3.1",
+    "poru": "^4.2.1",
+    "poru-spotify": "^2.0.2"
   }
 }
