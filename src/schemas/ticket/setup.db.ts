@@ -8,6 +8,7 @@ interface ITicketSetup {
     transcript: string;
     roles: string[];
     messageId: string;
+    description: string;
 }
 
 const arrLimit = (arr: Array<string>) => {
@@ -24,7 +25,8 @@ const ticketSetupSchema = new Schema<ITicketSetup>({
         type: [String],
         validate: [arrLimit, 'Cannot add more than 3 roles!']
     },
-    messageId: String
+    messageId: String,
+    description: String
 });
 
 export default model('TicketSetup', ticketSetupSchema, 'ticketSetup');
