@@ -19,7 +19,7 @@ const button: ButtonInterface = {
 
         const member = guild?.members.cache.get(user.id);
 
-        const SuccessEmbed = new EmbedBuilder().setColor('#43B383');
+        const SuccessEmbed = new EmbedBuilder().setColor(client.config.colors.green);
         const ErrorEmbed = new EmbedBuilder().setColor('Red');
 
         // await interaction.deferReply();

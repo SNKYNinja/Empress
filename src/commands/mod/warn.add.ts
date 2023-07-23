@@ -38,7 +38,7 @@ const command: SubCommand = {
                     embeds: [
                         new EmbedBuilder()
                             .setDescription(`${client.config.emojis.greenTick} ***${warnUser} has been warned!***`)
-                            .setColor('#43B383')
+                            .setColor(client.config.colors.green)
                     ]
                 });
             })

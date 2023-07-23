@@ -6,7 +6,7 @@ export const config: ConfigInterface = {
     bot: { token: process.env.DISCORD_TOKEN as string },
     colors: {
         theme: '#00e09e' as ColorResolvable,
-        green: '#00E09E' as ColorResolvable,
+        green: '#43B383' as ColorResolvable,
         red: '#FF434E' as ColorResolvable
     },
     chartColors: {

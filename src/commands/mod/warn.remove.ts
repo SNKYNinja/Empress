@@ -25,7 +25,7 @@ const command: SubCommand = {
         warnData.deleteOne({ _id: warnId });
 
         const Embed = new EmbedBuilder()
-            .setColor('#43B383')
+            .setColor(client.config.colors.green)
             .setDescription(`${client.config.emojis.greenTick} ***Removed warn for ${userMention(warnData.userID)}***`);
 
         interaction.reply({ embeds: [Embed] });

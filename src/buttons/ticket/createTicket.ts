@@ -33,7 +33,7 @@ const button: ButtonInterface = {
             guildId: guild.id
         });
 
-        if (!setupData)
+        if (!setupData || setupData?.messageId !== interaction.message.id)
             return interaction.editReply({
                 embeds: [
                     ErrorEmbed.setDescription(
@@ -115,7 +115,7 @@ const button: ButtonInterface = {
                 interaction.editReply({
                     embeds: [
                         new EmbedBuilder()
-                            .setColor('#43B383')
+                            .setColor(client.config.colors.green)
                             .setDescription(
                                 `${client.config.emojis.success} ***Your ticket has been created: ${channel}***`
                             )
