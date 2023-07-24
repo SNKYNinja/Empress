@@ -1,4 +1,5 @@
 import { SlashCommandBuilder, ClientEvents, PermissionFlagsBits, ColorResolvable } from 'discord.js';
+import { Player } from 'poru';
 
 export interface ChartColorOptions {
     default: string;
@@ -40,7 +41,9 @@ export interface EventInterface {
 export interface CommandInterface {
     subCommand?: string;
     data: SlashCommandBuilder | any;
-    cooldown?: number;
+    inVc?: boolean;
+    sameVc?: boolean;
+    currentTrack?: boolean;
     execute: (...args: any[]) => any;
 }
 
@@ -57,4 +60,8 @@ export interface SubCommand {
 export interface ButtonInterface {
     id: string;
     execute: (...args: any[]) => any;
+}
+
+export interface PlayerExtended extends Player {
+    message: Message | null;
 }
