@@ -1,9 +1,8 @@
 import { DiscordClient } from '../../bot.js';
 import { EventInterface } from '../../typings/index.js';
-import { Events, ActivityType, PresenceUpdateStatus, ActivitiesOptions, TextChannel } from 'discord.js';
+import { Events, ActivityType, PresenceUpdateStatus, ActivitiesOptions, TextChannel, version } from 'discord.js';
 import chalk from 'chalk';
 import DB from '../../schemas/client.db.js';
-import boxen from 'boxen';
 
 import { Player, Track } from 'poru';
 
@@ -43,7 +42,7 @@ const event: EventInterface = {
                 Data.Memory.shift();
                 await Data.save();
             }
-        }, 5 * 1000);
+        }, 10 * 1000);
 
         function pickPresence() {
             const option = Math.floor(Math.random() * statusArray.length);
