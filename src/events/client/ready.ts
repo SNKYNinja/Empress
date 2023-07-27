@@ -10,8 +10,6 @@ const event: EventInterface = {
     name: Events.ClientReady,
     options: { once: true, rest: false },
     execute: async (client: DiscordClient) => {
-        console.log(`${chalk.greenBright.bold('[INFO]')} Logged in as ${client.user?.username}`);
-
         // Status
         const statusArray: ActivitiesOptions[] = [
             {
