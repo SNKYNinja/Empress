@@ -128,7 +128,7 @@ const command: CommandInterface = {
                         labels: {
                             color: 'rgba(255, 255, 255, 1)',
                             font: {
-                                family: 'Sans 14px',
+                                family: "'Raleway', sans-serif",
                                 style: 'normal',
                                 weight: '500',
                                 size: 18
@@ -158,7 +158,7 @@ const command: CommandInterface = {
                             text: 'Time Elapsed (sec)',
                             color: 'rgba(255, 255, 255, 0.7)',
                             font: {
-                                family: 'Raleway',
+                                family: "'Raleway', sans-serif",
                                 size: 20,
                                 weight: 'bold'
                             }
