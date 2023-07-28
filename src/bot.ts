@@ -11,10 +11,8 @@ import {
 } from 'discord.js';
 import { config } from './config.js';
 
-import { fileURLToPath, pathToFileURL } from 'node:url';
-import { dirname } from 'node:path';
+import { pathToFileURL } from 'node:url';
 import path from 'path';
-import { chownSync, readdirSync } from 'node:fs';
 
 import { Poru, PoruOptions, PoruEvents, Player, Track } from 'poru';
 import { Spotify } from 'poru-spotify';
@@ -26,16 +24,20 @@ import Boxen from './classes/boxen.js';
 
 import { glob } from 'glob';
 
-import { nodeConnect } from './poru/nodeConnect.js';
-import { trackStart } from './poru/trackStart.js';
-import { trackEnd } from './poru/trackEnd.js';
+import { nodeConnect, trackStart, trackEnd } from './functions/poru/index.js';
 
 const IBox = new Boxen();
 const BoxContents = await IBox.createBox();
-IBox.addItem(BoxContents, {
-    name: `${chalk.bold.hex('#5865F2')('Discord.js')}`,
-    value: `v${version}\n`
-});
+IBox.addItems(BoxContents, [
+    {
+        name: chalk.bold.hex('#5865F2')('Discord.js'),
+        value: `v${version}`
+    },
+    {
+        name: chalk.bold.hex('#5865F2')('Node.js'),
+        value: `${process.version}\n`
+    }
+]);
 
 export class DiscordClient extends Client {
     public commands: Collection<string, CommandInterface>;
@@ -91,16 +93,16 @@ export class DiscordClient extends Client {
                 name: 'NODE-1',
                 host: 'us.pylex.me',
                 port: 8857,
-                password: 'youshallnotpass',
-                secure: false
-            },
-            {
-                name: 'NODE-2',
-                host: 'node1.lewdhutao.tech',
-                port: 1183,
-                password: 'lewdhutao',
+                password: 'empress2305',
                 secure: false
             }
+            // {
+            //     name: 'NODE-2',
+            //     host: 'node1.lewdhutao.tech',
+            //     port: 1183,
+            //     password: 'lewdhutao',
+            //     secure: false
+            // }
         ];
 
         // const poruSpotify = new Spotify({
@@ -287,13 +289,11 @@ export class DiscordClient extends Client {
         this.poru.on('nodeConnect', nodeConnect);
 
         this.poru.on('trackStart', (player, track) => {
-            const playerExtended = Object.assign(player, { message: null });
-            trackStart(playerExtended, track, this);
+            trackStart(player, track, this);
         });
 
         this.poru.on('trackEnd', (player, track) => {
-            const playerExtended = Object.assign(player, { message: null });
-            trackEnd(playerExtended, track, this);
+            trackEnd(player, track, this);
         });
 
         IBox.addItem(BoxContents, {
