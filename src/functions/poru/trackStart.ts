@@ -1,13 +1,9 @@
 import { EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, TextChannel, Message } from 'discord.js';
-import { millisToMinutesAndSeconds } from '../functions/msConversion.js';
-import { Track } from 'poru';
-import { DiscordClient } from '../bot';
-import { PlayerExtended } from '../typings/index';
+import { millisToMinutesAndSeconds } from '../msConversion.js';
+import { Track, Player } from 'poru';
+import { DiscordClient } from '../../bot.js';
 
-export const trackStart = (player: PlayerExtended, track: Track, client: DiscordClient) => {
-    function capitalizeFirstLetter(str: string) {
-        return str.charAt(0).toUpperCase() + str.slice(1);
-    }
+export const trackStart = (player: Player | any, track: Track, client: DiscordClient) => {
     // Required Variables //
     const source = capitalizeFirstLetter(track.info.sourceName)
         .replace('Youtube', 'Youtube ― <:icon_youtube:1032911572739293194>')
@@ -124,3 +120,7 @@ export const trackStart = (player: PlayerExtended, track: Track, client: Discord
         player.message = x;
     });
 };
+
+function capitalizeFirstLetter(str: string) {
+    return str.charAt(0).toUpperCase() + str.slice(1);
+}
