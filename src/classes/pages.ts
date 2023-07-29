@@ -19,6 +19,7 @@ export default class EmbedPaginator {
     public readonly pages: { id?: number };
     public disableTime: number;
     public ephemeral: boolean;
+    public deferReplied: boolean;
     constructor(client: DiscordClient, interaction: Interaction, embeds: EmbedBuilder[]) {
         this.client = client;
         this.interaction = interaction;
@@ -26,6 +27,7 @@ export default class EmbedPaginator {
         this.pages = {};
         this.disableTime = 60 * 5 * 1000; // 5 mins
         this.ephemeral = false;
+        this.deferReplied = false;
     }
 
     private getRow(id: string) {
@@ -72,14 +74,6 @@ export default class EmbedPaginator {
         return row;
     }
 
-    public setDisableTime(query: number) {
-        this.disableTime = query * 1000;
-    }
-
-    public setEphemeral(query: boolean) {
-        this.ephemeral = query;
-    }
-
     public async loadPages() {
         const id = this.interaction.id;
         this.pages[id] ??= 0;
@@ -91,12 +85,16 @@ export default class EmbedPaginator {
             iconURL: this.interaction.user.displayAvatarURL()
         });
 
-        const responseEmbed = await this.interaction.reply({
+        const replyOptions = {
             embeds: [embed],
             components: [this.getRow(id)],
             ephemeral: this.ephemeral,
             fetchReply: true
-        });
+        };
+
+        const responseEmbed = this.deferReplied
+            ? await this.interaction.editReply(replyOptions)
+            : await this.interaction.reply(replyOptions);
 
         const collector = responseEmbed.createMessageComponentCollector({
             time: this.disableTime
