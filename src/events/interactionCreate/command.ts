@@ -20,6 +20,36 @@ const event: EventInterface = {
             });
         }
 
+        const member = interaction.guild?.members.cache.get(interaction.user.id)!;
+
+        const player = client.poru.players.get(interaction.guild?.id!);
+        const memberVc = member.voice.channelId;
+        const botVc = interaction.guild?.members.me?.voice.channelId;
+
+        if (command.inVc && !memberVc) {
+            return interaction.reply({
+                embeds: [
+                    errEmbed.setDescription(`${redCross} ***You must be in a voice channel to use this command!***`)
+                ]
+            });
+        }
+
+        if (command.sameVc && player && botVc !== memberVc) {
+            return interaction.reply({
+                embeds: [
+                    errEmbed.setDescription(
+                        `${redCross} ***You must be in the same voice channel as mine to use this command!***`
+                    )
+                ]
+            });
+        }
+
+        if (command.currentTrack && !player?.currentTrack) {
+            return interaction.reply({
+                embeds: [errEmbed.setDescription(`${redCross} ***No track is currently being played!***`)]
+            });
+        }
+
         const subcommand = interaction.options.getSubcommand(false);
         try {
             if (subcommand) {
@@ -34,31 +64,6 @@ const event: EventInterface = {
                 ephemeral: true
             });
         }
-
-        const member = interaction.guild?.members.cache.get(interaction.user.id)!;
-
-        const player = client.poru.players.get(interaction.guild?.id!);
-        const memberVc = member.voice.channelId;
-        const botVc = interaction.guild?.members.me?.voice.channelId;
-
-        if (command.inVc && !memberVc)
-            return interaction.reply({
-                embeds: [
-                    errEmbed.setDescription(`${redCross} ***You must be in a voice channel to use this command!***`)
-                ]
-            });
-        if (command.sameVc && player && botVc !== memberVc)
-            return interaction.reply({
-                embeds: [
-                    errEmbed.setDescription(
-                        `${redCross} ***You must be in the same voice channel as mine to use this command!***`
-                    )
-                ]
-            });
-        if (command.currentTrack && !player?.currentTrack)
-            return interaction.reply({
-                embeds: [errEmbed.setDescription(`${redCross} ***No track is currnetly being played!***`)]
-            });
     }
 };
 
