@@ -95,14 +95,14 @@ export class DiscordClient extends Client {
                 port: 8857,
                 password: 'empress2305',
                 secure: false
+            },
+            {
+                name: 'NODE-2',
+                host: 'lavalink.clxud.dev',
+                port: 2333,
+                password: 'youshallnotpass',
+                secure: false
             }
-            // {
-            //     name: 'NODE-2',
-            //     host: 'node1.lewdhutao.tech',
-            //     port: 1183,
-            //     password: 'lewdhutao',
-            //     secure: false
-            // }
         ];
 
         // const poruSpotify = new Spotify({
