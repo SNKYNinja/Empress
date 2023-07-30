@@ -1,5 +1,6 @@
 import { EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, TextChannel, Message } from 'discord.js';
 import { millisToMinutesAndSeconds } from '../msConversion.js';
+import { trimSentence } from '../trimSentence.js';
 import { Track, Player } from 'poru';
 import { DiscordClient } from '../../bot.js';
 
@@ -9,8 +10,8 @@ export const trackStart = (player: Player | any, track: Track, client: DiscordCl
         .replace('Youtube', 'Youtube ― <:icon_youtube:1032911572739293194>')
         .replace('Spotify', 'Spotify ― <:icon_spotify:1032911570013016094>');
 
-    let nextTrack = `[${player.queue[0]?.info?.title}](${player.queue[0]?.info?.uri})`;
-    nextTrack = nextTrack.includes('undefined') ? 'None' : nextTrack;
+    let nextTrack = player.queue[0]?.info;
+    nextTrack = nextTrack ? `[${trimSentence(nextTrack.title, 31)}](${nextTrack.uri})` : 'None';
 
     let loopEmoji: string;
 
@@ -83,7 +84,7 @@ export const trackStart = (player: Player | any, track: Track, client: DiscordCl
             `
       **[${track.info.title}](${track.info.uri})**
       _ _
-      **\`〣\` Next Track ― **${nextTrack}
+      **\`〣\` Next Track ―** ${nextTrack}
 
       `
         )
