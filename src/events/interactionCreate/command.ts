@@ -15,7 +15,7 @@ const event: EventInterface = {
 
         if (!command) {
             return interaction.reply({
-                embeds: [errEmbed.setDescription(`${redCross} ***Error finding that command***`)],
+                embeds: [errEmbed.setDescription(`${redCross} ***That command is outdated!***`)],
                 ephemeral: true
             });
         }
