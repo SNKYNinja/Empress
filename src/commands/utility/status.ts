@@ -166,7 +166,7 @@ const command: CommandInterface = {
                     },
                     yAxes: {
                         suggestedMax: 80,
-                        suggestedMin: 0,
+                        suggestedMin: 20,
                         ticks: {
                             font: {
                                 family: 'Open Sans',
