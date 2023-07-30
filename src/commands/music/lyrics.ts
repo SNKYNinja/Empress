@@ -20,11 +20,6 @@ const command: CommandInterface = {
 
         await interaction.deferReply();
 
-        const ErrorEmbed = new EmbedBuilder()
-            .setColor('Red')
-            .setAuthor({ name: interaction.user.username, iconURL: interaction.user.displayAvatarURL() })
-            .setTimestamp();
-
         try {
             const song = await geniusClient.songs.get(parseInt(songId!));
             const lyrics = await song.lyrics();
@@ -60,15 +55,17 @@ const command: CommandInterface = {
 
                     thread.setLocked(true);
 
-                    setTimeout(async () => await thread?.delete(), 60 * 60 * 1000);
+                    setTimeout(async () => await thread?.delete(), 30 * 60 * 1000);
                 });
         } catch (err) {
             console.log(err);
             return interaction.editReply({
                 embeds: [
-                    ErrorEmbed.setDescription(
-                        '> <:icon_incorrect:1005149910280175616> Could not load lyrics for the query track!'
-                    )
+                    new EmbedBuilder()
+                        .setColor('Red')
+                        .setDescription(
+                            `${client.config.emojis.error} ***Could not load lyrics for the query track!***`
+                        )
                 ]
             });
         }
