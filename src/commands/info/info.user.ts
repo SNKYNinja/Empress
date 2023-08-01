@@ -31,7 +31,7 @@ const command: SubCommand = {
             .filter((role) => role.name !== '@everyone');
 
         let roleString: string;
-        if (roles.length > 1) roleString = roles.join('').replace('@everyone', '');
+        if (roles.length >= 1) roleString = roles.join('').replace('@everyone', '');
         else roleString = 'None';
 
         const joinedServer: number = Math.floor((member.joinedTimestamp as number) / 1000);
