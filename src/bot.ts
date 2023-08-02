@@ -24,7 +24,7 @@ import Boxen from './classes/boxen.js';
 
 import { glob } from 'glob';
 
-import { nodeConnect, trackStart, trackEnd } from './functions/poru/index.js';
+import { nodeConnect, trackStart, trackEnd, queueEnd } from './functions/poru/index.js';
 
 const IBox = new Boxen();
 const BoxContents = await IBox.createBox();
@@ -294,6 +294,10 @@ export class DiscordClient extends Client {
 
         this.poru.on('trackEnd', (player, track) => {
             trackEnd(player, track, this);
+        });
+
+        this.poru.on('queueEnd', (player) => {
+            queueEnd(player, this);
         });
 
         IBox.addItem(BoxContents, {
