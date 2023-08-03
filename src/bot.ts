@@ -24,7 +24,7 @@ import Boxen from './classes/boxen.js';
 
 import { glob } from 'glob';
 
-import { nodeConnect, trackStart, trackEnd, queueEnd } from './functions/poru/index.js';
+import { nodeConnect, trackStart, trackEnd, queueEnd, nodeError } from './functions/poru/index.js';
 
 const IBox = new Boxen();
 const BoxContents = await IBox.createBox();
@@ -90,14 +90,14 @@ export class DiscordClient extends Client {
 
         const nodes = [
             {
-                name: 'NODE-1',
+                name: 'Private Node',
                 host: 'us.pylex.me',
                 port: 8857,
                 password: 'empress2305',
                 secure: false
             },
             {
-                name: 'NODE-2',
+                name: 'Public Node',
                 host: 'lavalink.clxud.dev',
                 port: 2333,
                 password: 'youshallnotpass',
@@ -145,6 +145,7 @@ export class DiscordClient extends Client {
                     });
                 });
 
+            console.clear();
             await IBox.showBox(BoxContents, {
                 borderColor: 'white',
                 borderStyle: 'round',
@@ -286,7 +287,12 @@ export class DiscordClient extends Client {
     }
 
     private async loadPoruEvents() {
-        this.poru.on('nodeConnect', nodeConnect);
+        const time = Date.now();
+        this.poru.on('nodeConnect', (node) => {
+            nodeConnect(node, time);
+        });
+
+        this.poru.on('nodeError', nodeError);
 
         this.poru.on('trackStart', (player, track) => {
             trackStart(player, track, this);
