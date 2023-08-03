@@ -40,7 +40,7 @@ const event: EventInterface = {
                 Data.Memory.shift();
                 await Data.save();
             }
-        }, 10 * 1000);
+        }, 30 * 1000);
 
         function pickPresence() {
             const option = Math.floor(Math.random() * statusArray.length);
