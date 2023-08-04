@@ -1,5 +1,5 @@
 import { DiscordClient } from '../../bot.js';
-import { ButtonInterface, CommandInterface, EventInterface } from '../../typings/index';
+import { ButtonInterface, CommandInterface, EventInterface } from '../../Typings/index';
 import { Events, ChatInputCommandInteraction, ButtonInteraction } from 'discord.js';
 
 const event: EventInterface = {

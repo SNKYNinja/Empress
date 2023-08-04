@@ -1,4 +1,4 @@
-import { EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, TextChannel, Message } from 'discord.js';
+import { EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, TextChannel } from 'discord.js';
 import { millisToMinutesAndSeconds } from '../msConversion.js';
 import { trimSentence } from '../trimSentence.js';
 import { Track, Player } from 'poru';

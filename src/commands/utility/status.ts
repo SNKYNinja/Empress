@@ -1,6 +1,6 @@
 /* eslint-disable camelcase */
 import { DiscordClient } from '../../bot';
-import { CommandInterface } from '../../typings/index';
+import { CommandInterface } from '../../Typings/index';
 import {
     ChatInputCommandInteraction,
     PermissionFlagsBits,
@@ -12,13 +12,14 @@ import {
 
 import os from 'os';
 
-import DB from '../../schemas/client.db.js';
+import DB from '../../Schemas/client.db.js';
 
 import { ChartConfiguration, ChartData } from 'chart.js';
 import { ChartJSNodeCanvas } from 'chartjs-node-canvas';
 import gradient from 'chartjs-plugin-gradient';
 
 import mongoose from 'mongoose';
+import { color } from '../../Structure/Design/design.js';
 
 const command: CommandInterface = {
     data: new SlashCommandBuilder()
@@ -44,8 +45,6 @@ const command: CommandInterface = {
                 ephemeral: true
             });
         }
-
-        const colors = client.config.chartColors;
 
         /** Change according to the setInterval() in [ready.ts](../../Events/Client/ready.ts) */
         const labels = ['60', '55', '50', '45', '40', '35', '30', '25', '20', '15', '10', '5'];
@@ -86,13 +85,13 @@ const command: CommandInterface = {
                         backgroundColor: {
                             axis: 'y',
                             colors: {
-                                0: colors.green.zero,
-                                100: colors.green.quarter
+                                0: color.chart.green.zero,
+                                100: color.chart.green.quarter
                             }
                         }
                     },
-                    pointBackgroundColor: colors.green.default,
-                    borderColor: colors.green.default,
+                    pointBackgroundColor: color.chart.green.default,
+                    borderColor: color.chart.green.default,
                     data: Memory,
                     // lineTension: 0.4,
                     borderWidth: 2,

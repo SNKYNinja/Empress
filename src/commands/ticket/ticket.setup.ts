@@ -1,4 +1,4 @@
-import { DiscordClient } from 'bot';
+import { DiscordClient } from '../../bot.js';
 import {
     ActionRowBuilder,
     ButtonBuilder,
@@ -8,9 +8,9 @@ import {
     Guild,
     TextChannel
 } from 'discord.js';
-import { SubCommand } from 'typings';
-import DB from '../../schemas/ticket/setup.db.js';
-import { createTicketPanel } from '../../functions/createTicketPanel.js';
+import { SubCommand } from 'Typings';
+import DB from '../../Schemas/ticket/setup.db.js';
+import { createTicketPanel } from '../../Functions/createTicketPanel.js';
 
 const command: SubCommand = {
     subCommand: 'ticket.setup',

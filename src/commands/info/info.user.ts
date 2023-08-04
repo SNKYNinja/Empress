@@ -1,6 +1,6 @@
-import addBadges from '../../functions/getBadges.js';
+import addBadges from '../../Functions/getBadges.js';
 import { DiscordClient } from '../../bot.js';
-import { SubCommand } from '../../typings/index';
+import { SubCommand } from '../../Typings/index';
 import {
     ActionRowBuilder,
     ButtonBuilder,
@@ -11,6 +11,7 @@ import {
     Role,
     User
 } from 'discord.js';
+import { icon } from '../../Structure/Design/icons.js';
 
 const command: SubCommand = {
     subCommand: 'info.user',
@@ -59,22 +60,22 @@ const command: SubCommand = {
                 },
                 {
                     name: '`✦` Booster',
-                    value: `${client.config.emojis.reply} ${booster}`,
+                    value: `${icon.reply.default} ${booster}`,
                     inline: true
                 },
                 {
                     name: `\`✦\` Roles (${roles.length})`,
-                    value: `${client.config.emojis.reply} ${roleString}`,
+                    value: `${icon.reply.default} ${roleString}`,
                     inline: false
                 },
                 {
                     name: '`✦` Joined Server',
-                    value: `${client.config.emojis.reply} <t:${joinedServer}:D>`,
+                    value: `${icon.reply.default} <t:${joinedServer}:D>`,
                     inline: true
                 },
                 {
                     name: '`✦` Joined Discord',
-                    value: `${client.config.emojis.reply} <t:${joinedDiscord}:D>`,
+                    value: `${icon.reply.default} <t:${joinedDiscord}:D>`,
                     inline: true
                 }
             );

@@ -1,8 +1,9 @@
-import { DiscordClient } from 'bot';
+import { DiscordClient } from '../../bot.js';
 import { ChatInputCommandInteraction, EmbedBuilder, userMention } from 'discord.js';
-import { SubCommand } from 'typings';
+import { SubCommand } from 'Typings';
 
-import warnSchema from '../../schemas/moderation/warn.db.js';
+import warnSchema from '../../Schemas/moderation/warn.db.js';
+import { icon, color } from '../../Structure/Design/design.js';
 
 const command: SubCommand = {
     subCommand: 'warn.remove',
@@ -16,17 +17,15 @@ const command: SubCommand = {
         if (!warnData)
             return interaction.reply({
                 embeds: [
-                    ErrorEmbed.setDescription(
-                        `${client.config.emojis.redCross} ***No warning with ID: ${warnId} was found!***`
-                    )
+                    ErrorEmbed.setDescription(`${icon.info.redCross} ***No warning with ID: ${warnId} was found!***`)
                 ]
             });
 
         warnData.deleteOne({ _id: warnId });
 
         const Embed = new EmbedBuilder()
-            .setColor(client.config.colors.green)
-            .setDescription(`${client.config.emojis.greenTick} ***Removed warn for ${userMention(warnData.userID)}***`);
+            .setColor(color.discord.green)
+            .setDescription(`${icon.info.greenTick} ***Removed warn for ${userMention(warnData.userID)}***`);
 
         interaction.reply({ embeds: [Embed] });
     }

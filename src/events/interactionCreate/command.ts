@@ -1,6 +1,7 @@
 import { DiscordClient } from '../../bot.js';
-import { CommandInterface, EventInterface } from '../../typings/index';
+import { CommandInterface, EventInterface } from '../../Typings/index';
 import { Events, ChatInputCommandInteraction, EmbedBuilder } from 'discord.js';
+import { icon } from '../../Structure/Design/design.js';
 
 const event: EventInterface = {
     name: Events.InteractionCreate,
@@ -11,7 +12,7 @@ const event: EventInterface = {
         const command: CommandInterface | undefined = client.commands.get(interaction.commandName);
 
         const errEmbed = new EmbedBuilder().setColor('Red');
-        const redCross = client.config.emojis.redCross;
+        const redCross = icon.info.redCross;
 
         if (!command) {
             return interaction.reply({
@@ -49,6 +50,11 @@ const event: EventInterface = {
                 embeds: [errEmbed.setDescription(`${redCross} ***No track is currently being played!***`)]
             });
         }
+
+        if (command.ownerOnly && interaction.user.id !== client.config.owner)
+            return interaction.reply({
+                embeds: [errEmbed.setDescription(`${redCross} ***Not authorized to use this command***`)]
+            });
 
         const subcommand = interaction.options.getSubcommand(false);
         try {

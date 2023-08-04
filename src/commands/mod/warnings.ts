@@ -1,9 +1,10 @@
 import { ChatInputCommandInteraction, SlashCommandBuilder, EmbedBuilder, userMention } from 'discord.js';
-import { CommandInterface } from 'typings';
+import { CommandInterface } from 'Typings';
 
-import DB from '../../schemas/moderation/warn.db.js';
-import { DiscordClient } from 'bot.js';
-import EmbedPaginator from '../../classes/pages.js';
+import DB from '../../Schemas/moderation/warn.db.js';
+import { DiscordClient } from '../../bot.js';
+import EmbedPaginator from '../../Structure/Classes/pages.js';
+import { icon } from '../../Structure/Design/design.js';
 
 const command: CommandInterface = {
     data: new SlashCommandBuilder()
@@ -24,7 +25,7 @@ const command: CommandInterface = {
                     new EmbedBuilder()
                         .setColor('Red')
                         .setDescription(
-                            `${client.config.emojis.redCross} ***${userMention(user.id)} has no warnings to display!***`
+                            `${icon.info.redCross} ***${userMention(user.id)} has no warnings to display!***`
                         )
                 ]
             });

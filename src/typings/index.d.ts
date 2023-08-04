@@ -9,27 +9,14 @@ export interface ChartColorOptions {
     zero: string;
 }
 
-export interface ChartColorPallete {
-    purple: ChartColorOptions;
-    indigo: ChartColorOptions;
-    green: ChartColorOptions;
-    blurple: ChartColorOptions;
-}
-
 export type ObjectNameIDArray = Array[{ name: string; id: string }];
 
 export interface ConfigInterface {
+    owner: string;
     bot: {
         token: string;
     };
     guilds: ObjectNameIDArray;
-    colors: {
-        [key: string]: ColorResolvable;
-    };
-    chartColors: ChartColorPallete;
-    emojis: {
-        [key: string]: string;
-    };
 }
 
 export interface EventInterface {
@@ -44,6 +31,7 @@ export interface CommandInterface {
     inVc?: boolean;
     sameVc?: boolean;
     currentTrack?: boolean;
+    ownerOnly?: boolean;
     execute: (...args: any[]) => any;
 }
 

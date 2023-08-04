@@ -1,8 +1,7 @@
 import { DiscordClient } from '../../bot.js';
-import { EventInterface } from '../../typings/index.js';
-import { Events, ActivityType, PresenceUpdateStatus, ActivitiesOptions, TextChannel, version } from 'discord.js';
-import chalk from 'chalk';
-import DB from '../../schemas/client.db.js';
+import { EventInterface } from '../../Typings/index.js';
+import { Events, ActivityType, PresenceUpdateStatus, ActivitiesOptions } from 'discord.js';
+import DB from '../../Schemas/client.db.js';
 
 import { Player, Track } from 'poru';
 

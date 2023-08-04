@@ -1,8 +1,9 @@
-import getGuildData from '../../functions/guildData.js';
-import { splitPascal, toPascalCase, getChannelTypeSize, maxDisplayRoles } from '../../functions/utility.js';
-import { DiscordClient } from '../../bot';
-import { SubCommand } from '../../typings/index';
+import getGuildData from '../../Functions/guildData.js';
+import { splitPascal, toPascalCase, getChannelTypeSize, maxDisplayRoles } from '../../Functions/utility.js';
+import { DiscordClient } from '../../bot.js';
+import { SubCommand } from '../../Typings/index';
 import { ChatInputCommandInteraction, Guild, ChannelType, EmbedBuilder } from 'discord.js';
+import { icon } from '../../Structure/Design/design.js';
 
 const command: SubCommand = {
     subCommand: 'info.server',
@@ -50,7 +51,7 @@ const command: SubCommand = {
             .setImage(guild.bannerURL({ size: 1024 }))
             .addFields(
                 {
-                    name: `${client.config.emojis.reply} __About__`,
+                    name: `${icon.reply.default} __About__`,
                     value: `
                     **Name:** ${guild.name}
                     **ID:** ${guild.id},
@@ -62,7 +63,7 @@ const command: SubCommand = {
                     `
                 },
                 {
-                    name: `${client.config.emojis.reply} __Security__`,
+                    name: `${icon.reply.default} __Security__`,
                     value: `
                     **Explicit Filter:** ${splitPascal(guildMetaData.explicitContentFilter, ' ')}
                     **NSFW Level:** ${splitPascal(guildMetaData.nsfwLevel, ' ')}
@@ -70,7 +71,7 @@ const command: SubCommand = {
                     `
                 },
                 {
-                    name: `${client.config.emojis.reply} __Users__ (${guild.memberCount})`,
+                    name: `${icon.reply.default} __Users__ (${guild.memberCount})`,
                     value: `
                     **Members:** ${guild.memberCount - botCount}
                     **Bots:** ${botCount}
@@ -79,10 +80,10 @@ const command: SubCommand = {
                     inline: true
                 },
                 {
-                    name: `${client.config.emojis.reply} __Features__`,
+                    name: `${icon.reply.default} __Features__`,
                     value:
                         guild.features
-                            .map((feature: any) => `${client.config.emojis.greenTick} - ${toPascalCase(feature, ' ')}`)
+                            .map((feature: any) => `${icon.info.greenTick} - ${toPascalCase(feature, ' ')}`)
                             .join('\n') || 'None'
                 },
                 {
@@ -147,7 +148,7 @@ const command: SubCommand = {
                     `,
                     inline: true
                 },
-                { name: 'Banner', value: guild.bannerURL() ? '** **' : `${client.config.emojis.redCross} None` }
+                { name: 'Banner', value: guild.bannerURL() ? '** **' : `${icon.info.redCross} None` }
             );
 
         interaction.followUp({ embeds: [responseEmbed] });

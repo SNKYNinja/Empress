@@ -1,4 +1,4 @@
-import { DiscordClient } from 'bot';
+import { DiscordClient } from '../../bot.js';
 import {
     ButtonInteraction,
     ChatInputCommandInteraction,
@@ -9,6 +9,7 @@ import {
     EmbedBuilder,
     userMention
 } from 'discord.js';
+import { icon } from '../Design/design.js';
 
 type Interaction = ChatInputCommandInteraction | ButtonInteraction | StringSelectMenuInteraction;
 
@@ -106,9 +107,7 @@ export default class EmbedPaginator {
             if (b.user.id !== this.interaction.user.id) {
                 const invalidReq = new EmbedBuilder()
                     .setDescription(
-                        `${this.client.config.emojis.redCross} *This message is only for ${userMention(
-                            this.interaction.user.id
-                        )}*`
+                        `${icon.info.redCross} *This message is only for ${userMention(this.interaction.user.id)}*`
                     )
                     .setColor('Red');
                 b.reply({ embeds: [invalidReq] });

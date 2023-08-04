@@ -1,5 +1,5 @@
 import { ChannelType, PermissionFlagsBits, SlashCommandBuilder } from 'discord.js';
-import { SubCommandInterface } from 'typings';
+import { SubCommandInterface } from 'Typings';
 
 const command: SubCommandInterface = {
     data: new SlashCommandBuilder()
@@ -41,14 +41,11 @@ const command: SubCommandInterface = {
                 .addStringOption((options) =>
                     options
                         .setName('message')
-                        .setDescription('The messsage users will see on the ticket panel')
+                        .setDescription('The age users will see on the ticket panel')
                         .setRequired(false)
                 )
         )
-        .addSubcommand((subcommand) => 
-            subcommand
-                .setName('config')
-                .setDescription('Configure ticket system settings'))
+        .addSubcommand((subcommand) => subcommand.setName('config').setDescription('Configure ticket system settings'))
         .addSubcommand((subcommand) =>
             subcommand
                 .setName('delete')
@@ -59,6 +56,33 @@ const command: SubCommandInterface = {
                         .setDescription('Select the ticket data you want to delete')
                         .setRequired(true)
                         .addChoices({ name: 'Setup', value: 'setup' }, { name: 'Tickets', value: 'tickets' })
+                )
+        )
+        .addSubcommandGroup((group) =>
+            group
+                .setName('user')
+                .setDescription('Add/remove users from a ticket')
+                .addSubcommand((subcommand) =>
+                    subcommand
+                        .setName('add')
+                        .setDescription('Add a user to the current ticket')
+                        .addUserOption((user) =>
+                            user
+                                .setName('user')
+                                .setDescription('Select the user to add to the ticket')
+                                .setRequired(true)
+                        )
+                )
+                .addSubcommand((subcommand) =>
+                    subcommand
+                        .setName('remove')
+                        .setDescription('Remove a user from the current ticket')
+                        .addUserOption((user) =>
+                            user
+                                .setName('user')
+                                .setDescription('Select the user to remove from this ticket')
+                                .setRequired(true)
+                        )
                 )
         )
 };

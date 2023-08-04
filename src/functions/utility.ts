@@ -1,4 +1,4 @@
-import { Channel, ChannelType, GuildChannelManager, RoleManager, Role } from 'discord.js';
+import { Channel, ChannelType, GuildChannelManager, Role } from 'discord.js';
 
 const splitPascal = (string: string, separator: string) => string.split(/(?=[A-Z])/).join(separator);
 

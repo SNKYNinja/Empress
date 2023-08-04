@@ -1,7 +1,7 @@
 import axios from 'axios';
-import { DiscordClient } from 'bot';
+import { DiscordClient } from '../../bot';
 import { ChatInputCommandInteraction, EmbedBuilder, SlashCommandBuilder } from 'discord.js';
-import { CommandInterface } from 'typings';
+import { CommandInterface } from 'Typings';
 
 const command: CommandInterface = {
     data: new SlashCommandBuilder()

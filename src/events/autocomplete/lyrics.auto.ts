@@ -1,6 +1,6 @@
-import { DiscordClient } from 'bot';
+import { DiscordClient } from '../../bot';
 import { AutocompleteInteraction, Events } from 'discord.js';
-import { EventInterface } from 'typings';
+import { EventInterface } from 'Typings';
 
 import { Client } from 'genius-lyrics';
 export const geniusClient = new Client(process.env.GENIUS_SECRET);

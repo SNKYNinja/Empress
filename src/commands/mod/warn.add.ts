@@ -1,13 +1,13 @@
-import { DiscordClient } from 'bot';
 import { ChatInputCommandInteraction, EmbedBuilder } from 'discord.js';
-import { SubCommand } from 'typings';
+import { SubCommand } from 'Typings';
 import { Types } from 'mongoose';
 
-import warnSchema from '../../schemas/moderation/warn.db.js';
+import warnSchema from '../../Schemas/moderation/warn.db.js';
+import { icon, color } from '../../Structure/Design/design.js';
 
 const command: SubCommand = {
     subCommand: 'warn.add',
-    execute: async (interaction: ChatInputCommandInteraction, client: DiscordClient) => {
+    execute: async (interaction: ChatInputCommandInteraction) => {
         const warnUser = interaction.options.getUser('user')!;
         const reason = interaction.options.getString('reason') || 'No Reason';
 
@@ -20,7 +20,7 @@ const command: SubCommand = {
             return interaction.reply({
                 embeds: [
                     ErrorEmbed.setDescription(
-                        `${client.config.emojis.redCross} ***Warning infraction cannot be added to yourself***`
+                        `${icon.info.redCross} ***Warning infraction cannot be added to yourself***`
                     )
                 ]
             });
@@ -37,19 +37,15 @@ const command: SubCommand = {
                 interaction.reply({
                     embeds: [
                         new EmbedBuilder()
-                            .setDescription(`${client.config.emojis.greenTick} ***${warnUser} has been warned!***`)
-                            .setColor(client.config.colors.green)
+                            .setDescription(`${icon.info.greenTick} ***${warnUser} has been warned!***`)
+                            .setColor(color.discord.green)
                     ]
                 });
             })
             .catch((err) => {
                 console.log(err);
                 interaction.reply({
-                    embeds: [
-                        ErrorEmbed.setDescription(
-                            `${client.config.emojis.redCross} ***Error processing the request!***`
-                        )
-                    ]
+                    embeds: [ErrorEmbed.setDescription(`${icon.info.redCross} ***Error processing the request!***`)]
                 });
             });
     }

@@ -1,4 +1,4 @@
-import { DiscordClient } from 'bot';
+import { DiscordClient } from '../bot.js';
 import { EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, Guild } from 'discord.js';
 
 function createTicketPanel(client: DiscordClient, guild: Guild, message: string) {

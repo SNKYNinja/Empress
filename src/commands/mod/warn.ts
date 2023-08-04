@@ -1,5 +1,5 @@
 import { SlashCommandBuilder, PermissionFlagsBits } from 'discord.js';
-import { SubCommandInterface } from 'typings';
+import { SubCommandInterface } from 'Typings';
 
 const command: SubCommandInterface = {
     data: new SlashCommandBuilder()

@@ -1,4 +1,4 @@
-import { DiscordClient } from 'bot';
+import { DiscordClient } from '../../bot';
 import { EmbedBuilder, TextChannel } from 'discord.js';
 import { Player } from 'poru';
 
