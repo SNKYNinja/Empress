@@ -1,8 +1,9 @@
-import { DiscordClient } from 'bot';
+import { DiscordClient } from '../../bot.js';
 import { ChatInputCommandInteraction, SlashCommandBuilder, EmbedBuilder, ThreadAutoArchiveDuration } from 'discord.js';
-import { CommandInterface } from 'typings';
+import { CommandInterface } from 'Typings';
 
-import { geniusClient } from '../../events/autocomplete/lyrics.auto.js';
+import { geniusClient } from '../../Events/AutoComplete/lyrics.auto.js';
+import { icon } from '../../Structure/Design/design.js';
 
 const command: CommandInterface = {
     data: new SlashCommandBuilder()
@@ -63,9 +64,7 @@ const command: CommandInterface = {
                 embeds: [
                     new EmbedBuilder()
                         .setColor('Red')
-                        .setDescription(
-                            `${client.config.emojis.error} ***Could not load lyrics for the query track!***`
-                        )
+                        .setDescription(`${icon.info.error} ***Could not load lyrics for the query track!***`)
                 ]
             });
         }

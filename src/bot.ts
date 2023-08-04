@@ -1,4 +1,4 @@
-import { ConfigInterface, EventInterface, CommandInterface, ObjectNameIDArray, ButtonInterface } from './typings/index';
+import { ConfigInterface, EventInterface, CommandInterface, ObjectNameIDArray, ButtonInterface } from './Typings/index';
 import {
     ApplicationCommandDataResolvable,
     Client,
@@ -11,20 +11,20 @@ import {
 } from 'discord.js';
 import { config } from './config.js';
 
+import { glob } from 'glob';
 import { pathToFileURL } from 'node:url';
 import path from 'path';
-
-import { Poru, PoruOptions, PoruEvents, Player, Track } from 'poru';
-import { Spotify } from 'poru-spotify';
 
 import { connect } from 'mongoose';
 
 import chalk from 'chalk';
-import Boxen from './classes/boxen.js';
+import Boxen from './Structure/Classes/boxen.js';
+// import Logger from './classes/logger.js';
+// const logger = new Logger();
 
-import { glob } from 'glob';
-
-import { nodeConnect, trackStart, trackEnd, queueEnd, nodeError } from './functions/poru/index.js';
+import { Poru, PoruOptions } from 'poru';
+import { Spotify } from 'poru-spotify';
+import { nodeConnect, trackStart, trackEnd, queueEnd, nodeError } from './Functions/Poru/index.js';
 
 const IBox = new Boxen();
 const BoxContents = await IBox.createBox();
@@ -113,7 +113,7 @@ export class DiscordClient extends Client {
         const poruOptions: PoruOptions = {
             library: 'discord.js',
             defaultPlatform: 'ytsearch',
-            reconnectTries: 5
+            reconnectTries: 0
             // plugins: [poruSpotify]
         };
 
@@ -175,13 +175,13 @@ export class DiscordClient extends Client {
             });
     }
 
-    private async loadCommands() {
+    public async loadCommands() {
         try {
             let commandsArray: Array<ApplicationCommandDataResolvable> = [];
             let commandsDevArray: Array<ApplicationCommandDataResolvable> = [];
             let commandStatus: string = chalk.bold.hex('#43B383')('OK');
 
-            const CmdsDir = await glob(`${process.cwd()}/dist/commands/*/*{.ts,.js}`);
+            const CmdsDir = await glob(`${process.cwd()}/dist/Commands/*/*{.ts,.js}`);
             await Promise.all(
                 CmdsDir.map(async (file) => {
                     const commandPath = path.resolve(file);
@@ -226,8 +226,8 @@ export class DiscordClient extends Client {
         }
     }
 
-    private async loadEvents() {
-        const EventsDir = await glob(`${process.cwd()}/dist/events/*/*{.ts,.js}`);
+    public async loadEvents() {
+        const EventsDir = await glob(`${process.cwd()}/dist/Events/*/*{.ts,.js}`);
         let eventStatus: string = chalk.bold.hex('#43B383')('OK');
 
         await Promise.all(
@@ -261,7 +261,7 @@ export class DiscordClient extends Client {
     }
 
     private async loadButtons() {
-        const ButtonDir = await glob(`${process.cwd()}/dist/buttons/*/*{.ts,.js}`);
+        const ButtonDir = await glob(`${process.cwd()}/dist/Component/Buttons/*/*{.ts,.js}`);
         let buttonStatus: string = chalk.bold.hex('#43B383')('OK');
 
         await Promise.all(
@@ -308,21 +308,21 @@ export class DiscordClient extends Client {
 
         IBox.addItem(BoxContents, {
             name: `${chalk.white('Music')}`,
-            value: ' '.repeat(3) + chalk.bold.hex('#43B383')('OK\n')
+            value: ' '.repeat(3) + chalk.bold.hex('#43B383')('OK')
         });
     }
 
     private loadErrorLog() {
         process.on('unhandledRejection', (reason, promise) => {
-            console.log(' [Error_Handling] :: Unhandled Rejection/Catch');
+            console.log('   [Error_Handling] :: Unhandled Rejection/Catch');
             console.log(reason, '\n', promise);
         });
         process.on('uncaughtException', (err, origin) => {
-            console.log(' [Error_Handling] :: Uncaught Exception/Catch');
+            console.log('   [Error_Handling] :: Uncaught Exception/Catch');
             console.log(err, '\n', origin);
         });
         process.on('uncaughtExceptionMonitor', (err, origin) => {
-            console.log(' [Error_Handling] :: Uncaught Exception/Catch (MONITOR)');
+            console.log('   [Error_Handling] :: Uncaught Exception/Catch (MONITOR)');
             console.log(err, '\n', origin);
         });
         process.on('multipleResolves', (type, promise, reason) => {
