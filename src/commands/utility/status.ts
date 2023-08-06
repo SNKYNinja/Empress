@@ -1,6 +1,6 @@
 /* eslint-disable camelcase */
-import { DiscordClient } from '../../bot';
-import { CommandInterface } from '../../Typings/index';
+import { DiscordClient } from 'bot.js';
+import { CommandInterface } from 'Typings';
 import {
     ChatInputCommandInteraction,
     PermissionFlagsBits,

@@ -1,4 +1,4 @@
-import { ConfigInterface } from './Typings/index';
+import { ConfigInterface } from 'Typings';
 import 'dotenv/config';
 
 export const config: ConfigInterface = {

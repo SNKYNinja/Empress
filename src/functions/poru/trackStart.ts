@@ -1,8 +1,9 @@
 import { EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, TextChannel } from 'discord.js';
+import { DiscordClient } from 'bot.js';
+import { Track, Player } from 'poru';
+
 import { millisToMinutesAndSeconds } from '../msConversion.js';
 import { trimSentence } from '../trimSentence.js';
-import { Track, Player } from 'poru';
-import { DiscordClient } from '../../bot.js';
 
 export const trackStart = (player: Player | any, track: Track, client: DiscordClient) => {
     // Required Variables //

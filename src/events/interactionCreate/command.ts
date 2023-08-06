@@ -1,5 +1,5 @@
-import { DiscordClient } from '../../bot.js';
-import { CommandInterface, EventInterface } from '../../Typings/index';
+import { DiscordClient } from 'bot.js';
+import { CommandInterface, EventInterface } from 'Typings';
 import { Events, ChatInputCommandInteraction, EmbedBuilder } from 'discord.js';
 import { icon } from '../../Structure/Design/design.js';
 
@@ -23,7 +23,7 @@ const event: EventInterface = {
 
         const member = interaction.guild?.members.cache.get(interaction.user.id)!;
 
-        const player = client.poru.players.get(interaction.guild?.id!);
+        const player = client.poru.players.get(interaction.guild!.id);
         const memberVc = member.voice.channelId;
         const botVc = interaction.guild?.members.me?.voice.channelId;
 

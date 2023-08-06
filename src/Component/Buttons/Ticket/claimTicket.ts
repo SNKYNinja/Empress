@@ -1,4 +1,4 @@
-import { DiscordClient } from '../../../bot.js';
+import { DiscordClient } from 'bot.js';
 import {
     ButtonBuilder,
     ButtonInteraction,

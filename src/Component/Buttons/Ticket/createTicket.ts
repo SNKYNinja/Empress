@@ -1,4 +1,4 @@
-import { DiscordClient } from '../../../bot.js';
+import { DiscordClient } from 'bot.js';
 import {
     ButtonInteraction,
     EmbedBuilder,
@@ -96,7 +96,7 @@ const button: ButtonInterface = {
                         deny: [PermissionFlagsBits.ViewChannel]
                     },
                     {
-                        id: client.user?.id!,
+                        id: client.user!.id,
                         allow: [
                             PermissionFlagsBits.SendMessages,
                             PermissionFlagsBits.ViewChannel,

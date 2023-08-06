@@ -1,6 +1,6 @@
-import { DiscordClient } from '../../bot.js';
-import { ButtonInterface, CommandInterface, EventInterface } from '../../Typings/index';
-import { Events, ChatInputCommandInteraction, ButtonInteraction } from 'discord.js';
+import { DiscordClient } from 'bot.js';
+import { ButtonInterface, EventInterface } from 'Typings';
+import { Events, ButtonInteraction } from 'discord.js';
 
 const event: EventInterface = {
     name: Events.InteractionCreate,

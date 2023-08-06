@@ -1,5 +1,5 @@
-import { DiscordClient } from '../../bot.js';
-import { EventInterface } from '../../Typings/index.js';
+import { DiscordClient } from 'bot.js';
+import { EventInterface } from 'Typings';
 import { Events, ActivityType, PresenceUpdateStatus, ActivitiesOptions } from 'discord.js';
 import DB from '../../Schemas/client.db.js';
 
