@@ -1,7 +1,7 @@
 import getGuildData from '../../Functions/guildData.js';
 import { splitPascal, toPascalCase, getChannelTypeSize, maxDisplayRoles } from '../../Functions/utility.js';
-import { DiscordClient } from '../../bot.js';
-import { SubCommand } from '../../Typings/index';
+import { DiscordClient } from 'bot.js';
+import { SubCommand } from 'Typings';
 import { ChatInputCommandInteraction, Guild, ChannelType, EmbedBuilder } from 'discord.js';
 import { icon } from '../../Structure/Design/design.js';
 

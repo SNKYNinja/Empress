@@ -1,6 +1,6 @@
 import addBadges from '../../Functions/getBadges.js';
-import { DiscordClient } from '../../bot.js';
-import { SubCommand } from '../../Typings/index';
+import { DiscordClient } from 'bot.js';
+import { SubCommand } from 'Typings';
 import {
     ActionRowBuilder,
     ButtonBuilder,

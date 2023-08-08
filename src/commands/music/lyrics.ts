@@ -1,4 +1,4 @@
-import { DiscordClient } from '../../bot.js';
+import { DiscordClient } from 'bot.js';
 import { ChatInputCommandInteraction, SlashCommandBuilder, EmbedBuilder, ThreadAutoArchiveDuration } from 'discord.js';
 import { CommandInterface } from 'Typings';
 

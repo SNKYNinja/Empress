@@ -1,4 +1,4 @@
-import { DiscordClient } from '../../bot.js';
+import { DiscordClient } from 'bot.js';
 import { ChatInputCommandInteraction, EmbedBuilder, userMention } from 'discord.js';
 import { SubCommand } from 'Typings';
 
