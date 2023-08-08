@@ -1,28 +1,26 @@
-import { ConfigInterface, EventInterface, CommandInterface, ObjectNameIDArray, ButtonInterface } from './Typings/index';
 import {
-    ApplicationCommandDataResolvable,
-    Client,
-    ClientEvents,
-    Collection,
-    Events,
-    GatewayIntentBits,
-    Partials,
-    version
-} from 'discord.js';
+    ConfigInterface,
+    EventInterface,
+    CommandInterface,
+    ObjectNameIDArray,
+    ButtonInterface,
+    SelectMenuInterface
+} from 'Typings';
+import { Client, Collection, GatewayIntentBits, Partials, version } from 'discord.js';
 import { config } from './config.js';
-
-import { glob } from 'glob';
-import { pathToFileURL } from 'node:url';
-import path from 'path';
 
 import { connect } from 'mongoose';
 
+import { SlashCommandHandler, ClientEventHandler, ComponentInteractionHandler } from './Structure/Handlers/handlers.js';
+
+const { loadCommands } = new SlashCommandHandler();
+const { loadEvents } = new ClientEventHandler();
+const { loadSelectMenus, loadButtons } = new ComponentInteractionHandler();
+
 import chalk from 'chalk';
 import Boxen from './Structure/Classes/boxen.js';
-// import Logger from './classes/logger.js';
-// const logger = new Logger();
 
-import { Poru, PoruOptions } from 'poru';
+import { NodeGroup, Poru, PoruOptions } from 'poru';
 import { Spotify } from 'poru-spotify';
 import { nodeConnect, trackStart, trackEnd, queueEnd, nodeError } from './Functions/Poru/index.js';
 
@@ -44,6 +42,7 @@ export class DiscordClient extends Client {
     public subcommands: Collection<string, CommandInterface>;
     public events: Collection<string, EventInterface>;
     public buttons: Collection<string, ButtonInterface>;
+    public selectMenus: Collection<string, SelectMenuInterface>;
     public cooldowns: Collection<string, number>;
     public config: ConfigInterface;
     public poru: Poru;
@@ -85,10 +84,11 @@ export class DiscordClient extends Client {
         this.subcommands = new Collection();
         this.events = new Collection();
         this.buttons = new Collection();
+        this.selectMenus = new Collection();
         this.config = config;
         this.cooldowns = new Collection();
 
-        const nodes = [
+        const nodes: NodeGroup[] = [
             {
                 name: 'Private Node',
                 host: 'us.pylex.me',
@@ -122,11 +122,14 @@ export class DiscordClient extends Client {
 
     public async loadClient() {
         try {
-            await this.connectDatabase();
-            await this.loadCommands();
-            await this.loadEvents();
-            await this.loadButtons();
-            await this.loadPoruEvents();
+            await Promise.all([
+                loadCommands(this, IBox, BoxContents),
+                loadEvents(this, IBox, BoxContents),
+                loadButtons(this, IBox, BoxContents),
+                loadSelectMenus(this, IBox, BoxContents),
+                this.loadPoruEvents(),
+                this.connectDatabase()
+            ]);
             this.loadErrorLog();
 
             await this.login(this.config.bot.token)
@@ -163,127 +166,16 @@ export class DiscordClient extends Client {
         await connect(process.env.DATABASE_URL)
             .then(() => {
                 IBox.addItem(BoxContents, {
-                    name: `${chalk.bold.red('Database')}`,
-                    value: chalk.bold.hex('#43B383')('Connected\n')
+                    name: `${chalk.bold.red('\nDatabase')}`,
+                    value: chalk.bold.hex('#43B383')('Connected')
                 });
             })
             .catch(() => {
                 IBox.addItem(BoxContents, {
-                    name: `${chalk.bold.red('Database')}`,
-                    value: chalk.bold.hex('#f04941')('Not Connected\n')
+                    name: `${chalk.bold.red('\nDatabase')}`,
+                    value: chalk.bold.hex('#f04941')('Not Connected')
                 });
             });
-    }
-
-    public async loadCommands() {
-        try {
-            let commandsArray: Array<ApplicationCommandDataResolvable> = [];
-            let commandsDevArray: Array<ApplicationCommandDataResolvable> = [];
-            let commandStatus: string = chalk.bold.hex('#43B383')('OK');
-
-            const CmdsDir = await glob(`${process.cwd()}/dist/Commands/*/*{.ts,.js}`);
-            await Promise.all(
-                CmdsDir.map(async (file) => {
-                    const commandPath = path.resolve(file);
-                    const command: CommandInterface = (await import(`${pathToFileURL(commandPath)}`)).default;
-
-                    if (!command) {
-                        commandStatus = `${chalk.bold.red('Failed')} ${chalk.underline(
-                            file.split('\\').slice(2).join('/')
-                        )}`;
-                        return;
-                    }
-
-                    if (command.subCommand) return this.subcommands.set(command.subCommand, command);
-
-                    if (file.endsWith('.dev.ts') || file.endsWith('.dev.js')) {
-                        commandsDevArray.push(command.data.toJSON());
-                        this.commands.set(command.data.name, command);
-                    } else {
-                        commandsArray.push(command.data.toJSON());
-                        this.commands.set(command.data.name, command);
-                    }
-                })
-            );
-
-            IBox.addItem(BoxContents, {
-                name: `${chalk.white('Commands')}`,
-                value: commandStatus
-            });
-
-            // Register Commands
-            this.on(Events.ClientReady, async () => {
-                // Public Commands
-                this.application?.commands.set(commandsArray);
-
-                // Dev Commands
-                this.config.guilds.forEach(async (guild) => {
-                    await this.guilds.cache.get(guild.id)?.commands.set(commandsDevArray);
-                });
-            });
-        } catch (err) {
-            console.log(err);
-        }
-    }
-
-    public async loadEvents() {
-        const EventsDir = await glob(`${process.cwd()}/dist/Events/*/*{.ts,.js}`);
-        let eventStatus: string = chalk.bold.hex('#43B383')('OK');
-
-        await Promise.all(
-            EventsDir.map(async (file) => {
-                const eventPath = path.resolve(file);
-                const event: EventInterface = (await import(`${pathToFileURL(eventPath)}`)).default;
-
-                if (!event) {
-                    eventStatus = `${chalk.bold.red(' Failed')} ${chalk.underline(
-                        file.split('\\').slice(2).join('/')
-                    )}`;
-                    return;
-                }
-
-                // Set Events
-                if (event.options?.once) {
-                    this.once(event.name, (...args) => event.execute(...args, this));
-                } else {
-                    this.on(event.name, (...args) => event.execute(...args, this));
-                }
-
-                // Event Collection
-                this.events.set(event.name, event);
-            })
-        );
-
-        IBox.addItem(BoxContents, {
-            name: `${chalk.white('Events')}`,
-            value: ' '.repeat(2) + eventStatus
-        });
-    }
-
-    private async loadButtons() {
-        const ButtonDir = await glob(`${process.cwd()}/dist/Component/Buttons/*/*{.ts,.js}`);
-        let buttonStatus: string = chalk.bold.hex('#43B383')('OK');
-
-        await Promise.all(
-            ButtonDir.map(async (file) => {
-                const buttonPath = path.resolve(file);
-                const button: ButtonInterface = (await import(`${pathToFileURL(buttonPath)}`)).default;
-
-                if (!button) {
-                    buttonStatus = `${chalk.bold.red('Failed')} ${chalk.underline(
-                        file.split('\\').slice(2).join('/')
-                    )}`;
-                    return;
-                }
-
-                this.buttons.set(button.id, button);
-            })
-        );
-
-        IBox.addItem(BoxContents, {
-            name: `${chalk.white('Buttons')}`,
-            value: ' ' + buttonStatus
-        });
     }
 
     private async loadPoruEvents() {
