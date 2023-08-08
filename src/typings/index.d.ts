@@ -47,9 +47,14 @@ export interface SubCommand {
 
 export interface ButtonInterface {
     id: string;
+    player?: boolean;
+    inVc?: boolean;
+    sameVc?: boolean;
+    currentTrack?: boolean;
     execute: (...args: any[]) => any;
 }
 
-export interface PlayerExtended extends Player {
-    message: Message | null;
+export interface SelectMenuInterface {
+    id: string;
+    execute: (...args: any[]) => any;
 }
