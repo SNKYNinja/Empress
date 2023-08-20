@@ -5,7 +5,7 @@ import { glob } from 'glob';
 import { pathToFileURL } from 'node:url';
 import path from 'path';
 
-import Boxen from 'Structure/Classes/boxen';
+import Boxen from 'Structures/Classes/boxen';
 import chalk from 'chalk';
 
 export class ComponentInteractionHandler {
