@@ -3,7 +3,7 @@ import { splitPascal, toPascalCase, getChannelTypeSize, maxDisplayRoles } from '
 import { DiscordClient } from 'bot.js';
 import { SubCommand } from 'Typings';
 import { ChatInputCommandInteraction, Guild, ChannelType, EmbedBuilder } from 'discord.js';
-import { icon } from '../../Structure/Design/design.js';
+import { icon } from '../../Structures/Design/design.js';
 
 const command: SubCommand = {
     subCommand: 'info.server',

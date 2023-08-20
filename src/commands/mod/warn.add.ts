@@ -3,7 +3,7 @@ import { SubCommand } from 'Typings';
 import { Types } from 'mongoose';
 
 import warnSchema from '../../Schemas/moderation/warn.db.js';
-import { icon, color } from '../../Structure/Design/design.js';
+import { icon, color } from '../../Structures/Design/design.js';
 
 const command: SubCommand = {
     subCommand: 'warn.add',

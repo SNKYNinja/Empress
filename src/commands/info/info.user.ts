@@ -11,7 +11,7 @@ import {
     Role,
     User
 } from 'discord.js';
-import { icon } from '../../Structure/Design/icons.js';
+import { icon } from '../../Structures/Design/icons.js';
 
 const command: SubCommand = {
     subCommand: 'info.user',

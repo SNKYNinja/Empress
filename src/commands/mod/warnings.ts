@@ -3,8 +3,8 @@ import { CommandInterface } from 'Typings';
 
 import DB from '../../Schemas/moderation/warn.db.js';
 import { DiscordClient } from 'bot.js';
-import EmbedPaginator from '../../Structure/Classes/pages.js';
-import { icon } from '../../Structure/Design/design.js';
+import EmbedPaginator from '../../Structures/Classes/pages.js';
+import { icon } from '../../Structures/Design/design.js';
 
 const command: CommandInterface = {
     data: new SlashCommandBuilder()

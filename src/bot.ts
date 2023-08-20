@@ -11,14 +11,18 @@ import { config } from './config.js';
 
 import { connect } from 'mongoose';
 
-import { SlashCommandHandler, ClientEventHandler, ComponentInteractionHandler } from './Structure/Handlers/handlers.js';
+import {
+    SlashCommandHandler,
+    ClientEventHandler,
+    ComponentInteractionHandler
+} from './Structures/Handlers/handlers.js';
 
 const { loadCommands } = new SlashCommandHandler();
 const { loadEvents } = new ClientEventHandler();
 const { loadSelectMenus, loadButtons } = new ComponentInteractionHandler();
 
 import chalk from 'chalk';
-import Boxen from './Structure/Classes/boxen.js';
+import Boxen from './Structures/Classes/boxen.js';
 
 import { NodeGroup, Poru, PoruOptions } from 'poru';
 import { Spotify } from 'poru-spotify';
@@ -91,8 +95,8 @@ export class DiscordClient extends Client {
         const nodes: NodeGroup[] = [
             {
                 name: 'Private Node',
-                host: 'us.pylex.me',
-                port: 8857,
+                host: 'premium.pylexservers.xyz',
+                port: 25575,
                 password: 'empress2305',
                 secure: false
             },
@@ -113,7 +117,7 @@ export class DiscordClient extends Client {
         const poruOptions: PoruOptions = {
             library: 'discord.js',
             defaultPlatform: 'ytsearch',
-            reconnectTries: 0
+            reconnectTries: 1
             // plugins: [poruSpotify]
         };
 

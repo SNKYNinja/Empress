@@ -18,7 +18,7 @@ import { ButtonInterface } from 'Typings';
 
 import setupDB from '../../../Schemas/ticket/setup.db.js';
 import ticketsDB from '../../../Schemas/ticket/tickets.db.js';
-import { icon, color } from '../../../Structure/Design/design.js';
+import { icon, color } from '../../../Structures/Design/design.js';
 
 const button: ButtonInterface = {
     id: 'createTicket',

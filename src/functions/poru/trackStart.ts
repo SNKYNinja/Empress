@@ -29,7 +29,7 @@ export const trackStart = (player: Player | any, track: Track, client: DiscordCl
         new ButtonBuilder().setCustomId('loop').setEmoji(loopEmoji).setStyle(ButtonStyle.Secondary),
 
         new ButtonBuilder()
-            .setCustomId('prev')
+            .setCustomId('prev ')
             .setEmoji('<:backward_button:1039487425673703465>')
             .setStyle(ButtonStyle.Primary)
             .setDisabled(!player.previousTrack),

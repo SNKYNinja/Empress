@@ -19,7 +19,7 @@ import { ChartJSNodeCanvas } from 'chartjs-node-canvas';
 import gradient from 'chartjs-plugin-gradient';
 
 import mongoose from 'mongoose';
-import { color } from '../../Structure/Design/design.js';
+import { color } from '../../Structures/Design/design.js';
 
 const command: CommandInterface = {
     data: new SlashCommandBuilder()

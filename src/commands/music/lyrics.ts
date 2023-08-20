@@ -1,9 +1,16 @@
 import { DiscordClient } from 'bot.js';
-import { ChatInputCommandInteraction, SlashCommandBuilder, EmbedBuilder, ThreadAutoArchiveDuration } from 'discord.js';
+import {
+    ChatInputCommandInteraction,
+    SlashCommandBuilder,
+    EmbedBuilder,
+    ThreadAutoArchiveDuration,
+    AutocompleteInteraction
+} from 'discord.js';
 import { CommandInterface } from 'Typings';
 
-import { geniusClient } from '../../Events/AutoComplete/lyrics.auto.js';
-import { icon } from '../../Structure/Design/design.js';
+import { Client } from 'genius-lyrics';
+export const geniusClient = new Client(process.env.GENIUS_SECRET);
+import { icon } from '../../Structures/Design/design.js';
 
 const command: CommandInterface = {
     data: new SlashCommandBuilder()
@@ -16,6 +23,20 @@ const command: CommandInterface = {
                 .setRequired(true)
                 .setAutocomplete(true)
         ),
+    autocomplete: async (interaction: AutocompleteInteraction) => {
+        const focused = interaction.options.getFocused();
+
+        const searches = await geniusClient.songs.search(focused);
+
+        interaction.respond(
+            searches
+                .filter((song) => song.title.length + song.artist.name.length + 3 <= 100)
+                .map((song) => ({
+                    name: `${song.title} ― ${song.artist.name}`,
+                    value: song.id.toString()
+                }))
+        );
+    },
     execute: async (interaction: ChatInputCommandInteraction, client: DiscordClient) => {
         const songId = interaction.options.getString('query');
 

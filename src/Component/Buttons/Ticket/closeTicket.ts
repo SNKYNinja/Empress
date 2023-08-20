@@ -17,7 +17,7 @@ import prettier from 'prettier';
 
 import setupDB from '../../../Schemas/ticket/setup.db.js';
 import ticketsDB from '../../../Schemas/ticket/tickets.db.js';
-import { color, icon } from '../../../Structure/Design/design.js';
+import { color, icon } from '../../../Structures/Design/design.js';
 
 const button: ButtonInterface = {
     id: 'closeTicket',

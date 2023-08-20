@@ -1,7 +1,7 @@
 import { DiscordClient } from 'bot.js';
 import { ButtonInterface, EventInterface } from 'Typings';
 import { Events, ButtonInteraction, EmbedBuilder } from 'discord.js';
-import { icon } from '../../Structure/Design/design.js';
+import { icon } from '../../Structures/Design/design.js';
 
 const event: EventInterface = {
     name: Events.InteractionCreate,
