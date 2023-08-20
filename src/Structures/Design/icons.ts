@@ -16,5 +16,9 @@ export const icon = {
         green: '<:green_icon:1136929045397913620>',
         purple: '<:purple_icon:1136929037999165440>',
         blue: '<:blue_icon:1136929032118730883>'
+    },
+    music: {
+        pause: '<:pause:1034451169839423518>',
+        play: '<:play:1049700245715562607>'
     }
 };
