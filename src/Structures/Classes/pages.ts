@@ -82,7 +82,7 @@ export default class EmbedPaginator {
         const embed = this.embeds[this.pages[id]];
 
         this.embeds[this.pages[id]].setFooter({
-            text: this.interaction.user.username,
+            text: this.interaction.user.displayName,
             iconURL: this.interaction.user.displayAvatarURL()
         });
 
@@ -130,7 +130,7 @@ export default class EmbedPaginator {
             } else if (b.customId == 'page-no') return;
 
             this.embeds[this.pages[id]].setFooter({
-                text: this.interaction.user.username,
+                text: this.interaction.user.displayName,
                 iconURL: this.interaction.user.displayAvatarURL()
             });
 
