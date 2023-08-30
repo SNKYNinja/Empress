@@ -40,22 +40,22 @@ export class ComponentInteractionHandler {
     }
 
     public async loadSelectMenus(client: DiscordClient, IBox?: Boxen, BoxContents?: string[]) {
-        const SelectMenuDir = await glob(`${process.cwd()}/dist/Component/Menus/*/*{.ts,.js}`);
+        const SelectMenuDir = await glob(`${process.cwd()}/dist/Component/SelectMenus/*/*{.ts,.js}`);
         let selectMenuStatus: string = chalk.bold.hex('#43B383')('OK');
 
         await Promise.all(
             SelectMenuDir.map(async (file) => {
-                const buttonPath = path.resolve(file);
-                const button: ButtonInterface = (await import(`${pathToFileURL(buttonPath)}`)).default;
+                const selectMenuPath = path.resolve(file);
+                const menu: SelectMenuInterface = (await import(`${pathToFileURL(selectMenuPath)}`)).default;
 
-                if (!button) {
+                if (!menu) {
                     selectMenuStatus = `${chalk.bold.red('Failed')} ${chalk.underline(
                         file.split('\\').slice(2).join('/')
                     )}`;
                     return;
                 }
 
-                client.selectMenus.set(button.id, button);
+                client.selectMenus.set(menu.id, menu);
             })
         );
 
