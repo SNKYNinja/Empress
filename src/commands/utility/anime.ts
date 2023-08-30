@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { DiscordClient } from '../../bot';
+import { DiscordClient } from 'bot';
 import { ChatInputCommandInteraction, EmbedBuilder, SlashCommandBuilder } from 'discord.js';
 import { CommandInterface } from 'Typings';
 
