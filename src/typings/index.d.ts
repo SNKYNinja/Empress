@@ -1,4 +1,11 @@
-import { SlashCommandBuilder, ClientEvents, PermissionFlagsBits, ColorResolvable } from 'discord.js';
+import { DiscordClient } from 'bot';
+import {
+    SlashCommandBuilder,
+    ClientEvents,
+    PermissionFlagsBits,
+    ColorResolvable,
+    AutocompleteInteraction
+} from 'discord.js';
 import { Player } from 'poru';
 
 export interface ChartColorOptions {
@@ -28,10 +35,12 @@ export interface EventInterface {
 export interface CommandInterface {
     subCommand?: string;
     data: SlashCommandBuilder | any;
+    player?: boolean;
     inVc?: boolean;
     sameVc?: boolean;
     currentTrack?: boolean;
     ownerOnly?: boolean;
+    autocomplete?: (...args: any[]) => any;
     execute: (...args: any[]) => any;
 }
 
@@ -41,7 +50,13 @@ export interface SubCommandInterface {
 }
 
 export interface SubCommand {
-    subCommand: string;
+    subCommand?: string;
+    player?: boolean;
+    inVc?: boolean;
+    sameVc?: boolean;
+    currentTrack?: boolean;
+    ownerOnly?: boolean;
+    autocomplete?: (...args: any[]) => any;
     execute: (...args: any[]) => any;
 }
 
