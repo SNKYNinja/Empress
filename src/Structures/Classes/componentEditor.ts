@@ -13,7 +13,7 @@ export class ComponentEditor {
         this.message = message;
     }
 
-    public setButtonData(row: number, button: number, data: ButtonData) {
+    public async setButtonData(row: number, button: number, data: ButtonData) {
         let rows: ActionRowBuilder<ButtonBuilder>[] = [];
 
         for (let i = 0; i < this.message.components.length; i++) {
@@ -42,41 +42,3 @@ export class ComponentEditor {
         return rows;
     }
 }
-
-// export function editPlayerButtons(
-//     player: Player | any,
-//     rowIdx: number,
-//     btnIdx: number,
-//     data: { emoji: string; style?: ButtonStyle }
-// ) {
-//     if (!player.message) return;
-
-//     let rows: ActionRowBuilder<ButtonBuilder>[] = [];
-
-//     for (let i = 0; i < player.message.components.length; i++) {
-//         if (i === rowIdx) {
-//             let components = new ActionRowBuilder<ButtonBuilder>();
-
-//             for (let j = 0; j < player.message.components[i].components.length; j++) {
-//                 const btn = ButtonBuilder.from(player.message.components[i].components[j]);
-
-//                 if (j === btnIdx) {
-//                     btn.setEmoji(data.emoji);
-//                     data.style && btn.setStyle(data.style);
-//                 }
-
-//                 btn.data;
-
-//                 components.addComponents(btn);
-//             }
-
-//             rows.push(components);
-//         } else {
-//             rows.push(ActionRowBuilder.from(player.message.components[i]));
-//         }
-//     }
-
-//     player.message?.edit({
-//         components: rows
-//     });
-// }
