@@ -116,7 +116,7 @@ export const trackStart = (player: Player | any, track: Track, client: DiscordCl
 
     const channel = client.channels.cache.get(player.textChannel) as TextChannel;
 
-    player.message?.delete().catch(() => null);
+    player.message?.delete().catch(() => {});
 
     channel?.send({ embeds: [embed], components: [row, row2] }).then((x) => {
         player.message = x;

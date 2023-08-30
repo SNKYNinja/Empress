@@ -1,5 +1,6 @@
-export { nodeError } from './nodeError.js';
-export { nodeConnect } from './nodeConnect.js';
-export { trackStart } from './trackStart.js';
-export { trackEnd } from './trackEnd.js';
-export { queueEnd } from './queueEnd.js';
+export * from './nodeError.js';
+export * from './nodeConnect.js';
+export * from './trackStart.js';
+export * from './trackEnd.js';
+export * from './queueEnd.js';
+export * from './playerDestroy.js';

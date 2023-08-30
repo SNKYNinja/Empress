@@ -12,5 +12,5 @@ export const nodeError = async (node: Node, event: any) => {
     const nodeName = node.name + ':';
 
     console.log(`   ${lightArrow} ${chalk.bold.underline(nodeName)} ${chalk.bold.hex(lightRed)('Not Connected')}`);
-    console.log(`   ${darkArrow} ${chalk.bold.hex(darkText)(event)}`);
+    console.log(`   ${darkArrow} ${chalk.bold.hex(darkText)(event)}\n`);
 };

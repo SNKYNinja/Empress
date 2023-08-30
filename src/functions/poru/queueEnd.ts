@@ -1,9 +1,9 @@
-import { DiscordClient } from '../../bot';
+import { DiscordClient } from 'bot';
 import { EmbedBuilder, TextChannel } from 'discord.js';
 import { Player } from 'poru';
 
 export const queueEnd = async (player: Player | any, client: DiscordClient) => {
-    player.message?.delete();
+    await player.message?.delete().catch(() => {});
 
     const Embed = new EmbedBuilder()
         .setColor('#2F3136')
