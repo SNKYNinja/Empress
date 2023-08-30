@@ -26,7 +26,7 @@ import Boxen from './Structures/Classes/boxen.js';
 
 import { NodeGroup, Poru, PoruOptions } from 'poru';
 import { Spotify } from 'poru-spotify';
-import { nodeConnect, trackStart, trackEnd, queueEnd, nodeError } from './Functions/Poru/index.js';
+import * as PoruEvents from './Functions/Poru/index.js';
 
 const IBox = new Boxen();
 const BoxContents = await IBox.createBox();
@@ -93,13 +93,13 @@ export class DiscordClient extends Client {
         this.cooldowns = new Collection();
 
         const nodes: NodeGroup[] = [
-            {
-                name: 'Private Node',
-                host: 'premium.pylexservers.xyz',
-                port: 25575,
-                password: 'empress2305',
-                secure: false
-            },
+            // {
+            //     name: 'Private Node',
+            //     host: 'lavalink-replit-1.sharmilachaudh1.repl.co',
+            //     port: 443,
+            //     password: 'empress2305',
+            //     secure: true
+            // }
             {
                 name: 'Public Node',
                 host: 'lavalink.clxud.dev',
@@ -109,10 +109,10 @@ export class DiscordClient extends Client {
             }
         ];
 
-        // const poruSpotify = new Spotify({
-        //     clientID: process.env.SPOTIFY_ID,
-        //     clientSecret: process.env.SPOTIFY_SECRET
-        // });
+        const poruSpotify: any = new Spotify({
+            clientID: process.env.SPOTIFY_ID,
+            clientSecret: process.env.SPOTIFY_SECRET
+        });
 
         const poruOptions: PoruOptions = {
             library: 'discord.js',
@@ -184,22 +184,26 @@ export class DiscordClient extends Client {
 
     private async loadPoruEvents() {
         const time = Date.now();
-        this.poru.on('nodeConnect', (node) => {
-            nodeConnect(node, time);
+        this.poru.on('nodeConnect', async (node) => {
+            await PoruEvents.nodeConnect(node, time);
         });
 
-        this.poru.on('nodeError', nodeError);
+        this.poru.on('nodeError', PoruEvents.nodeError);
 
         this.poru.on('trackStart', (player, track) => {
-            trackStart(player, track, this);
+            PoruEvents.trackStart(player, track, this);
         });
 
         this.poru.on('trackEnd', (player, track) => {
-            trackEnd(player, track, this);
+            PoruEvents.trackEnd(player, track, this);
         });
 
-        this.poru.on('queueEnd', (player) => {
-            queueEnd(player, this);
+        this.poru.on('queueEnd', async (player) => {
+            await PoruEvents.queueEnd(player, this);
+        });
+
+        this.poru.on('playerDestroy', async (player) => {
+            await PoruEvents.playerDestroy(player, this);
         });
 
         IBox.addItem(BoxContents, {
@@ -211,15 +215,15 @@ export class DiscordClient extends Client {
     private loadErrorLog() {
         process.on('unhandledRejection', (reason, promise) => {
             console.log('   [Error_Handling] :: Unhandled Rejection/Catch');
-            console.log(reason, '\n', promise);
+            console.log('  ', reason, '\n  ', promise);
         });
         process.on('uncaughtException', (err, origin) => {
             console.log('   [Error_Handling] :: Uncaught Exception/Catch');
-            console.log(err, '\n', origin);
+            console.log('  ', err, '\n  ', origin);
         });
         process.on('uncaughtExceptionMonitor', (err, origin) => {
             console.log('   [Error_Handling] :: Uncaught Exception/Catch (MONITOR)');
-            console.log(err, '\n', origin);
+            console.log('  ', err, '\n  ', origin);
         });
         process.on('multipleResolves', (type, promise, reason) => {
             // console.log(" [Error_Handling] :: Multiple Resolves");
