@@ -1,11 +1,11 @@
 import { type NodeGroup, Poru, type PoruOptions, type Player } from "poru";
-import type { DiscordClient } from "../bot.js";
-import { Logger } from "./logger.js";
+import type { DiscordClient } from "@/bot";
+import { Logger } from "@/lib/logger";
 import { ActionRowBuilder, ButtonStyle, TextChannel, Message, GuildMember } from "discord.js";
 import { ButtonBuilder } from "@discordjs/builders";
-import { Icons, Colors } from "../constants/index.js";
-import { EmbedHandler } from "./embed.js";
-import { formatDuration } from "../functions/utils.js";
+import { Icons, Colors } from "@/constants/index";
+import { EmbedHandler } from "@/lib/embed";
+import { formatDuration } from "@/functions/utils";
 
 // Extend Poru types to include custom properties
 declare module "poru" {
@@ -17,9 +17,9 @@ declare module "poru" {
 const nodes: NodeGroup[] = [
     {
         name: "Node 1",
-        host: "lavalink.jirayu.net",
-        port: 13592,
-        password: "youshallnotpass",
+        host: "lavalinkv4.serenetia.com",
+        port: 80,
+        password: "https://dsc.gg/ajidevserver",
         secure: false,
     },
 ];
@@ -104,11 +104,10 @@ export class PoruService {
                 track.info.sourceName.charAt(0).toUpperCase() + track.info.sourceName.slice(1);
             const nextTrack = player.queue[0]?.info;
             const nextTrackText = nextTrack
-                ? `[${
-                      nextTrack.title.length > 35
-                          ? nextTrack.title.substring(0, 35) + "..."
-                          : nextTrack.title
-                  }](${nextTrack.uri})`
+                ? `[${nextTrack.title.length > 35
+                    ? nextTrack.title.substring(0, 35) + "..."
+                    : nextTrack.title
+                }](${nextTrack.uri})`
                 : "None";
 
             const [controlRow, secondaryRow] = buildPlayerControls(player);
@@ -157,7 +156,7 @@ export class PoruService {
                 timestamp: true,
             });
             // Clean up previous message
-            player.message?.delete().catch(() => {});
+            player.message?.delete().catch(() => { });
 
             // Send new player message
             channel
@@ -168,12 +167,12 @@ export class PoruService {
                 .then((message) => {
                     player.message = message;
                 })
-                .catch(() => {});
+                .catch(() => { });
         });
 
         // Track end event
         client.poru.on("trackEnd", (player, track) => {
-            player.message?.delete().catch(() => {});
+            player.message?.delete().catch(() => { });
             Logger.info(`Track ended: ${track.info.title} in guild ${player.guildId}`);
         });
 
@@ -184,14 +183,14 @@ export class PoruService {
 
         // Player destroy event
         client.poru.on("playerDestroy", (player) => {
-            player.message?.delete().catch(() => {});
+            player.message?.delete().catch(() => { });
             Logger.info(`Player destroyed for guild ${player.guildId}`);
         });
 
         // Queue end event
         client.poru.on("queueEnd", (player) => {
             const channel = client.channels.cache.get(player.textChannel);
-            player.message?.delete().catch(() => {});
+            player.message?.delete().catch(() => { });
             if (channel && "send" in channel) {
                 channel.send("Queue has ended!");
             }

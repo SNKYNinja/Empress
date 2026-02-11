@@ -1,4 +1,4 @@
-import type { DiscordClient } from "bot";
+import type { DiscordClient } from "@/bot";
 import {
     type AutocompleteInteraction,
     InteractionContextType,
@@ -8,10 +8,10 @@ import {
     type GuildMember,
     MessageFlags,
 } from "discord.js";
-import type { CommandInterface } from "typings";
-import { EmbedHandler } from "../../services/index.js";
-import { Colors, DiscordLimits, Icons } from "../../constants/index.js";
-import { formatDuration } from "../../functions/utils.js";
+import type { CommandInterface } from "@/typings";
+import { EmbedHandler } from "@/lib/index";
+import { Colors, DiscordLimits, Icons } from "@/constants/index";
+import { formatDuration } from "@/functions/utils";
 
 const command: CommandInterface = {
     data: new SlashCommandBuilder()
@@ -132,9 +132,8 @@ const command: CommandInterface = {
                     title: playlistInfo?.name || "Unknown Playlist",
                     thumbnail:
                         firstTrack.info.artworkUrl || "/placeholder.svg?height=120&width=120",
-                    description: `${platformInfo.icon} **Added to Queue** • Position ${
-                        player.queue.length - tracks.length + 1
-                    } - ${player.queue.length}`,
+                    description: `${platformInfo.icon} **Added to Queue** • Position ${player.queue.length - tracks.length + 1
+                        } - ${player.queue.length}`,
                     fields: [
                         {
                             name: "Tracks",

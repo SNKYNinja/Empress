@@ -1,4 +1,4 @@
-import { ConfigInterface } from "typings"
+import { ConfigInterface } from "@/typings"
 import "dotenv/config"
 
 export const config: ConfigInterface = {

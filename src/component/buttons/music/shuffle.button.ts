@@ -1,7 +1,7 @@
-import { DiscordClient } from "bot";
+import { DiscordClient } from "@/bot";
 import { ButtonInteraction } from "discord.js";
-import { ButtonInterface } from "typings";
-import { MusicUtils } from "../../../functions/music-utils.js";
+import { ButtonInterface } from "@/typings";
+import { MusicUtils } from "@/functions/music-utils";
 
 const button: ButtonInterface = {
     id: "shuffle",

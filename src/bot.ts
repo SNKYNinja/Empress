@@ -5,22 +5,22 @@ import {
     ButtonInterface,
     SelectMenuInterface,
     ConfigInterface,
-} from "typings";
-import { config } from "./config.js";
+} from "@/typings";
+import { config } from "@/config";
 import { Poru } from "poru";
 
 import {
     SlashCommandHandler,
     ComponentInteractionHandler,
     ClientEventHandler,
-} from "./handlers/index.js";
+} from "@/handlers/index";
 const { loadCommands } = new SlashCommandHandler();
 const { loadEvents } = new ClientEventHandler();
 const { loadButtons, loadSelectMenus } = new ComponentInteractionHandler();
 
-import { connect } from "mongoose";
+import { Logger, PoruService } from "@/lib/index";
 
-import { Logger, PoruService } from "./services/index.js";
+import { prisma } from "@/lib/db";
 
 import { createRequire } from "node:module";
 const require = createRequire(import.meta.url);
@@ -81,8 +81,8 @@ export class DiscordClient extends Client {
 
     private async connectDatabase() {
         try {
-            const conn = await connect(process.env.DATABASE_URL);
-            Logger.info(logs.info.dbConnection.replaceAll("{PORT}", conn.connection.port));
+            await prisma.$connect();
+            Logger.info(logs.info.dbConnection.replaceAll("{PORT}", "5432"));
         } catch (err) {
             Logger.warn(logs.error.dbConnection, err);
         }

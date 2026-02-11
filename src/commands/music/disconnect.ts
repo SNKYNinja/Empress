@@ -1,13 +1,13 @@
-import type { DiscordClient } from "bot";
+import type { DiscordClient } from "@/bot";
 import {
     type ChatInputCommandInteraction,
     InteractionContextType,
     PermissionFlagsBits,
     SlashCommandBuilder,
 } from "discord.js";
-import type { CommandInterface } from "typings";
-import { EmbedHandler } from "../../services/index.js";
-import { Colors } from "../../constants/index.js";
+import type { CommandInterface } from "@/typings";
+import { EmbedHandler } from "@/lib/index";
+import { Colors } from "@/constants/index";
 
 const command: CommandInterface = {
     data: new SlashCommandBuilder()

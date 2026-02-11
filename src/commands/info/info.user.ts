@@ -1,9 +1,9 @@
-import { DiscordClient } from "bot"
-import { Colors } from "../../constants/index.js"
+import { DiscordClient } from "@/bot"
+import { Colors } from "@/constants/index"
 import { ChatInputCommandInteraction, GuildMember } from "discord.js"
-import { SubCommand } from "typings"
-import { EmbedHandler } from "../../services/index.js"
-import { StringUtils } from "../../functions/utils.js"
+import { SubCommand } from "@/typings"
+import { EmbedHandler } from "@/lib/index"
+import { StringUtils } from "@/functions/utils"
 
 const { splitPascalCase } = StringUtils
 
@@ -97,9 +97,9 @@ const command: SubCommand = {
                     value:
                         userBadges.length > 0
                             ? userBadges
-                                  .slice(0, 3)
-                                  .map((badge) => splitPascalCase(badge, " "))
-                                  .join("\n") + (userBadges.length > 3 ? `\n+${userBadges.length - 3} more` : "")
+                                .slice(0, 3)
+                                .map((badge) => splitPascalCase(badge, " "))
+                                .join("\n") + (userBadges.length > 3 ? `\n+${userBadges.length - 3} more` : "")
                             : "None",
                     inline: true
                 },

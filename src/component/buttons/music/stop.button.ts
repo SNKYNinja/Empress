@@ -1,6 +1,6 @@
-import { DiscordClient } from "bot";
+import { DiscordClient } from "@/bot";
 import { ButtonInteraction } from "discord.js";
-import { ButtonInterface } from "typings";
+import { ButtonInterface } from "@/typings";
 
 const button: ButtonInterface = {
     id: "stop",

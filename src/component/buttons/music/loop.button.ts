@@ -1,9 +1,9 @@
-import { DiscordClient } from "bot";
-import { Colors } from "../../../constants/index.js";
+import { DiscordClient } from "@/bot";
+import { Colors } from "@/constants/index";
 import { ButtonInteraction } from "discord.js";
-import { ButtonInterface } from "typings";
-import { buildPlayerControls } from "../../../services/poru.js";
-import { EmbedHandler } from "../../../services/index.js";
+import { ButtonInterface } from "@/typings";
+import { buildPlayerControls } from "@/lib/poru";
+import { EmbedHandler } from "@/lib/index";
 
 const button: ButtonInterface = {
     id: "loop",
@@ -13,12 +13,10 @@ const button: ButtonInterface = {
         const player = client.poru.players.get(interaction.guild!.id)!;
 
         let description: string;
-        const queueLoop = `*Queue Looped ― **${player.queue.length + 1}** track${
-            player.queue.length === 1 ? "" : "s"
-        }*`;
-        const trackLoop = `*Track Looped ― [${(player.currentTrack?.info.title, 31)}](${
-            player.currentTrack?.info.uri
-        })*`;
+        const queueLoop = `*Queue Looped ― **${player.queue.length + 1}** track${player.queue.length === 1 ? "" : "s"
+            }*`;
+        const trackLoop = `*Track Looped ― [${(player.currentTrack?.info.title, 31)}](${player.currentTrack?.info.uri
+            })*`;
         const disabledLoop = "*Loop Disabled ― Player*";
 
         switch (player.loop) {
@@ -52,7 +50,7 @@ const button: ButtonInterface = {
 
         if (player.message) {
             const [controlRow, secondaryRow] = buildPlayerControls(player);
-            await player.message.edit({ components: [controlRow, secondaryRow] }).catch(() => {});
+            await player.message.edit({ components: [controlRow, secondaryRow] }).catch(() => { });
         }
 
         interaction.deferUpdate();
@@ -60,7 +58,7 @@ const button: ButtonInterface = {
         const channel = interaction.channel;
         if (channel && "send" in channel) {
             const message = await channel.send({ embeds: [embed] });
-            setTimeout(() => message?.delete().catch(() => {}), 7000);
+            setTimeout(() => message?.delete().catch(() => { }), 7000);
         }
     },
 };

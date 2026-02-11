@@ -1,9 +1,9 @@
-import type { DiscordClient } from "bot";
+import type { DiscordClient } from "@/bot";
 import { type ButtonInteraction, type ChatInputCommandInteraction } from "discord.js";
-import { EmbedHandler } from "../services/index.js";
-import { Colors } from "../constants/index.js";
-import { EmbedPaginator } from "../services/index.js";
-import { StringUtils } from "../functions/utils.js";
+import { EmbedHandler } from "@/lib/index";
+import { Colors } from "@/constants/index";
+import { EmbedPaginator } from "@/lib/index";
+import { StringUtils } from "@/functions/utils";
 
 // Shared utility functions for music operations
 export const MusicUtils = {
@@ -50,15 +50,15 @@ export const MusicUtils = {
                 thumbnail: current.artworkUrl ?? null,
                 description: nowUri
                     ? `[${nowTitle}](${nowUri}) [\`${Math.floor(nowLength / 60000)}:${Math.floor(
-                          (nowLength % 60000) / 1000
-                      )
-                          .toString()
-                          .padStart(2, "0")}\`]`
+                        (nowLength % 60000) / 1000
+                    )
+                        .toString()
+                        .padStart(2, "0")}\`]`
                     : `${nowTitle} [\`${Math.floor(nowLength / 60000)}:${Math.floor(
-                          (nowLength % 60000) / 1000
-                      )
-                          .toString()
-                          .padStart(2, "0")}\`]`,
+                        (nowLength % 60000) / 1000
+                    )
+                        .toString()
+                        .padStart(2, "0")}\`]`,
                 fields: [
                     {
                         name: `Up Next ― ${StringUtils.formatLong(queueLength)}`,
@@ -102,9 +102,8 @@ export const MusicUtils = {
                 name: interaction.user.username,
                 iconURL: interaction.user.displayAvatarURL(),
             },
-            description: `*Shuffled **${player.queue.length}** track${
-                player.queue.length === 1 ? "" : "s"
-            } in the queue*`,
+            description: `*Shuffled **${player.queue.length}** track${player.queue.length === 1 ? "" : "s"
+                } in the queue*`,
             color: Colors.ALL.blue,
             timestamp: true,
         });

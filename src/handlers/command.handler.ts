@@ -1,21 +1,23 @@
 import { ApplicationCommandDataResolvable, Events } from "discord.js";
-import { CommandInterface } from "typings";
-import { DiscordClient } from "bot";
+import { CommandInterface } from "@/typings";
+import { DiscordClient } from "@/bot";
 
 import { glob } from "glob";
-import { pathToFileURL } from "node:url";
+import { pathToFileURL, fileURLToPath } from "node:url";
 import path from "path";
-import { Logger } from "../services/index.js";
+import { Logger } from "@/lib/index";
 
 export class SlashCommandHandler {
-    constructor() {}
+    constructor() { }
 
     public async loadCommands(client: DiscordClient) {
         try {
             let cmdArray: Array<ApplicationCommandDataResolvable> = [];
             let cmdDevArray: Array<ApplicationCommandDataResolvable> = [];
 
-            const cmdDir = await glob(`${process.cwd()}/dist/commands/*/*{.ts,.js}`);
+            const __dirname = path.dirname(fileURLToPath(import.meta.url));
+            const baseDir = path.resolve(__dirname, "..");
+            const cmdDir = await glob(`${baseDir}/commands/*/*{.ts,.js}`);
 
             await Promise.all(
                 cmdDir.map(async (file) => {

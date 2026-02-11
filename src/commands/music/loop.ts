@@ -1,9 +1,9 @@
-import type { DiscordClient } from "bot";
+import type { DiscordClient } from "@/bot";
 import { type ChatInputCommandInteraction, SlashCommandBuilder } from "discord.js";
-import type { CommandInterface } from "typings";
-import { Colors } from "../../constants/index.js";
-import { buildPlayerControls } from "../../services/poru.js";
-import { EmbedHandler } from "../../services/index.js";
+import type { CommandInterface } from "@/typings";
+import { Colors } from "@/constants/index";
+import { buildPlayerControls } from "@/lib/poru";
+import { EmbedHandler } from "@/lib/index";
 
 const command: CommandInterface = {
     data: new SlashCommandBuilder()
@@ -30,9 +30,8 @@ const command: CommandInterface = {
 
         let description: string;
 
-        const queueLoop = `*Queue Looped ― **${player.queue.length + 1}** track${
-            player.queue.length === 1 ? "" : "s"
-        }*`;
+        const queueLoop = `*Queue Looped ― **${player.queue.length + 1}** track${player.queue.length === 1 ? "" : "s"
+            }*`;
         const trackLoop = `*Track Looped ― [${player.currentTrack?.info.title}](${player.currentTrack?.info.uri})*`;
         const disabledLoop = "*Loop Disabled ― Player*";
 

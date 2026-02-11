@@ -1,4 +1,4 @@
-import { DiscordClient } from "bot";
+import { DiscordClient } from "@/bot";
 import {
     AutocompleteInteraction,
     ChatInputCommandInteraction,
@@ -8,12 +8,12 @@ import {
     ThreadChannel,
 } from "discord.js";
 
-import { EventInterface, CommandInterface, SubCommand } from "typings";
+import { EventInterface, CommandInterface, SubCommand } from "@/typings";
 
-import { Logger, EmbedHandler } from "../../services/index.js";
+import { Logger, EmbedHandler } from "@/lib/index";
 
-import { DiscordLimits } from "../../constants/index.js";
-import { config } from "../../config.js";
+import { DiscordLimits } from "@/constants/index";
+import { config } from "@/config";
 
 import { RateLimiter } from "discord.js-rate-limiter";
 const rateLimiter = new RateLimiter(
@@ -123,22 +123,22 @@ const event: EventInterface = {
                         interaction.channel instanceof NewsChannel ||
                         interaction.channel instanceof ThreadChannel
                         ? logs.error.commandGuild
-                              .replaceAll("{INTERACTION_ID}", interaction.id)
-                              .replaceAll("{COMMAND_NAME}", interaction.commandName)
-                              .replaceAll("{USER_TAG}", interaction.user.tag)
-                              .replaceAll("{USER_ID}", interaction.user.id)
-                              .replaceAll("{CHANNEL_NAME}", interaction.channel.name)
-                              .replaceAll("{CHANNEL_ID}", interaction.channel.id)
-                              .replaceAll(
-                                  "{GUILD_NAME}",
-                                  interaction.guild?.name ?? "Unknown Guild"
-                              )
-                              .replaceAll("{GUILD_ID}", interaction.guild?.id ?? "Unknown ID")
+                            .replaceAll("{INTERACTION_ID}", interaction.id)
+                            .replaceAll("{COMMAND_NAME}", interaction.commandName)
+                            .replaceAll("{USER_TAG}", interaction.user.tag)
+                            .replaceAll("{USER_ID}", interaction.user.id)
+                            .replaceAll("{CHANNEL_NAME}", interaction.channel.name)
+                            .replaceAll("{CHANNEL_ID}", interaction.channel.id)
+                            .replaceAll(
+                                "{GUILD_NAME}",
+                                interaction.guild?.name ?? "Unknown Guild"
+                            )
+                            .replaceAll("{GUILD_ID}", interaction.guild?.id ?? "Unknown ID")
                         : logs.error.commandOther
-                              .replaceAll("{INTERACTION_ID}", interaction.id)
-                              .replaceAll("{COMMAND_NAME}", interaction.commandName)
-                              .replaceAll("{USER_TAG}", interaction.user.tag)
-                              .replaceAll("{USER_ID}", interaction.user.id)
+                            .replaceAll("{INTERACTION_ID}", interaction.id)
+                            .replaceAll("{COMMAND_NAME}", interaction.commandName)
+                            .replaceAll("{USER_TAG}", interaction.user.tag)
+                            .replaceAll("{USER_ID}", interaction.user.id)
                 );
             }
         } else if (interaction.isAutocomplete()) {
@@ -162,24 +162,24 @@ const event: EventInterface = {
                         interaction.channel instanceof NewsChannel ||
                         interaction.channel instanceof ThreadChannel
                         ? logs.error.autocompleteGuild
-                              .replaceAll("{INTERACTION_ID}", interaction.id)
-                              .replaceAll("{OPTION_NAME}", interaction.commandName)
-                              .replaceAll("{COMMAND_NAME}", interaction.commandName)
-                              .replaceAll("{USER_TAG}", interaction.user.tag)
-                              .replaceAll("{USER_ID}", interaction.user.id)
-                              .replaceAll("{CHANNEL_NAME}", interaction.channel.name)
-                              .replaceAll("{CHANNEL_ID}", interaction.channel.id)
-                              .replaceAll(
-                                  "{GUILD_NAME}",
-                                  interaction.guild?.name ?? "Unknown Guild"
-                              )
-                              .replaceAll("{GUILD_ID}", interaction.guild?.id ?? "Unknown ID")
+                            .replaceAll("{INTERACTION_ID}", interaction.id)
+                            .replaceAll("{OPTION_NAME}", interaction.commandName)
+                            .replaceAll("{COMMAND_NAME}", interaction.commandName)
+                            .replaceAll("{USER_TAG}", interaction.user.tag)
+                            .replaceAll("{USER_ID}", interaction.user.id)
+                            .replaceAll("{CHANNEL_NAME}", interaction.channel.name)
+                            .replaceAll("{CHANNEL_ID}", interaction.channel.id)
+                            .replaceAll(
+                                "{GUILD_NAME}",
+                                interaction.guild?.name ?? "Unknown Guild"
+                            )
+                            .replaceAll("{GUILD_ID}", interaction.guild?.id ?? "Unknown ID")
                         : logs.error.autocompleteOther
-                              .replaceAll("{INTERACTION_ID}", interaction.id)
-                              .replaceAll("{OPTION_NAME}", interaction.commandName)
-                              .replaceAll("{COMMAND_NAME}", interaction.commandName)
-                              .replaceAll("{USER_TAG}", interaction.user.tag)
-                              .replaceAll("{USER_ID}", interaction.user.id),
+                            .replaceAll("{INTERACTION_ID}", interaction.id)
+                            .replaceAll("{OPTION_NAME}", interaction.commandName)
+                            .replaceAll("{COMMAND_NAME}", interaction.commandName)
+                            .replaceAll("{USER_TAG}", interaction.user.tag)
+                            .replaceAll("{USER_ID}", interaction.user.id),
                     err
                 );
             }

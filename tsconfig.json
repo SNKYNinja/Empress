@@ -4,12 +4,12 @@
     "lib": [
       "ES2022"
     ],
-    "module": "ES2022",
-    "moduleResolution": "Node",
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
     "resolveJsonModule": true,
     "esModuleInterop": true,
     "target": "ES2022",
-    "baseUrl": "src",
+    "baseUrl": ".",
     "rootDir": "./src",
     "outDir": "./dist",
     "sourceMap": true,
@@ -18,8 +18,16 @@
     "noImplicitAny": false,
     "noEmitOnError": true,
     "skipDefaultLibCheck": true,
-    "allowSyntheticDefaultImports": true
+    "allowSyntheticDefaultImports": true,
+    "paths": {
+      "@/*": [
+        "./src/*"
+      ]
+    }
   },
+  "include": [
+    "src"
+  ],
   "exclude": [
     "node_modules",
     "dist"

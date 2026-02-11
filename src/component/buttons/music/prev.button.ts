@@ -1,8 +1,8 @@
-import { ButtonInterface } from "typings";
-import { DiscordClient } from "bot";
+import { ButtonInterface } from "@/typings";
+import { DiscordClient } from "@/bot";
 import { ButtonInteraction, MessageFlags } from "discord.js";
-import { EmbedHandler } from "../../../services/index.js";
-import { Colors } from "../../../constants/index.js";
+import { EmbedHandler } from "@/lib/index";
+import { Colors } from "@/constants/index";
 
 const button: ButtonInterface = {
     id: "prev",
@@ -35,7 +35,7 @@ const button: ButtonInterface = {
         const channel = interaction.channel;
         if (channel && "send" in channel) {
             const message = await channel.send({ embeds: [embed] });
-            setTimeout(() => message?.delete().catch(() => {}), 7000);
+            setTimeout(() => message?.delete().catch(() => { }), 7000);
         }
 
         player.queue.unshift(player.previousTrack);

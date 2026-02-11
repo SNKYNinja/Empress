@@ -1,4 +1,4 @@
-import { DiscordClient } from "bot";
+import { DiscordClient } from "@/bot";
 import {
     SlashCommandBuilder,
     ClientEvents,

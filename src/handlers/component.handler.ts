@@ -1,15 +1,18 @@
-import { ButtonInterface, SelectMenuInterface } from "typings";
-import { DiscordClient } from "bot";
+import { ButtonInterface, SelectMenuInterface } from "@/typings";
+import { DiscordClient } from "@/bot";
 
 import { glob } from "glob";
-import { pathToFileURL } from "node:url";
+import { pathToFileURL, fileURLToPath } from "node:url";
 import path from "path";
 
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const baseDir = path.resolve(__dirname, "..");
+
 export class ComponentInteractionHandler {
-    constructor() {}
+    constructor() { }
 
     public async loadButtons(client: DiscordClient) {
-        const buttonDir = await glob(`${process.cwd()}/dist/component/buttons/*/*{.ts,.js}`);
+        const buttonDir = await glob(`${baseDir}/component/buttons/*/*{.ts,.js}`);
 
         await Promise.all(
             buttonDir.map(async (file) => {
@@ -23,7 +26,7 @@ export class ComponentInteractionHandler {
     }
 
     public async loadSelectMenus(client: DiscordClient) {
-        const menuDir = await glob(`${process.cwd()}/dist/component/selectMenus/*/*{.ts,.js}`);
+        const menuDir = await glob(`${baseDir}/component/selectMenus/*/*{.ts,.js}`);
 
         await Promise.all(
             menuDir.map(async (file) => {

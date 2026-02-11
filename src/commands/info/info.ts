@@ -1,5 +1,5 @@
 import { InteractionContextType, PermissionFlagsBits, SlashCommandBuilder } from "discord.js"
-import { SubCommandInterface } from "typings"
+import { SubCommandInterface } from "@/typings"
 
 const command: SubCommandInterface = {
     data: new SlashCommandBuilder()

@@ -1,5 +1,5 @@
 import { EmbedBuilder, RGBTuple } from "@discordjs/builders"
-import { Colors, Icons } from "../constants/index.js"
+import { Colors, Icons } from "@/constants/index"
 import { BaseInteraction } from "discord.js"
 
 interface EmbedOptions {

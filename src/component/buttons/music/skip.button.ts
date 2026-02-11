@@ -1,7 +1,7 @@
-import { ButtonInterface } from "typings";
-import { DiscordClient } from "bot";
+import { ButtonInterface } from "@/typings";
+import { DiscordClient } from "@/bot";
 import { ButtonInteraction } from "discord.js";
-import { MusicUtils } from "../../../functions/music-utils.js";
+import { MusicUtils } from "@/functions/music-utils";
 
 const button: ButtonInterface = {
     id: "skip",

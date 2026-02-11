@@ -1,15 +1,17 @@
-import { EventInterface } from "typings";
-import { DiscordClient } from "bot";
+import { EventInterface } from "@/typings";
+import { DiscordClient } from "@/bot";
 
 import { glob } from "glob";
-import { pathToFileURL } from "node:url";
+import { pathToFileURL, fileURLToPath } from "node:url";
 import path from "path";
 
 export class ClientEventHandler {
-    constructor() {}
+    constructor() { }
 
     public async loadEvents(client: DiscordClient) {
-        const eventDir = await glob(`${process.cwd()}/dist/events/*/*{.ts,.js}`);
+        const __dirname = path.dirname(fileURLToPath(import.meta.url));
+        const baseDir = path.resolve(__dirname, "..");
+        const eventDir = await glob(`${baseDir}/events/*/*{.ts,.js}`);
 
         await Promise.all(
             eventDir.map(async (file) => {

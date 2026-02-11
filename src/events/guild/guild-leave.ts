@@ -1,8 +1,8 @@
-import { DiscordClient } from "bot"
+import { DiscordClient } from "@/bot"
 import { Events, Guild } from "discord.js"
-import { EventInterface } from "typings"
+import { EventInterface } from "@/typings"
 
-import { Logger } from "../../services/index.js"
+import { Logger } from "@/lib/index"
 
 import { createRequire } from "node:module"
 const require = createRequire(import.meta.url)

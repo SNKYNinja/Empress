@@ -1,10 +1,10 @@
-import { DiscordClient } from "bot"
+import { DiscordClient } from "@/bot"
 import { ChatInputCommandInteraction, Guild, ChannelType } from "discord.js"
-import { EmbedHandler } from "../../services/index.js"
-import { Colors } from "../../constants/index.js"
-import { SubCommand } from "typings"
-import { StringUtils, DiscordUtils } from "../../functions/utils.js"
-import getGuildData from "../../functions/guild-data.js"
+import { EmbedHandler } from "@/lib/index"
+import { Colors } from "@/constants/index"
+import { SubCommand } from "@/typings"
+import { StringUtils, DiscordUtils } from "@/functions/utils"
+import getGuildData from "@/functions/guild-data"
 
 const { splitPascalCase, toPascalCase } = StringUtils
 const { getChannelCountByTypes } = DiscordUtils

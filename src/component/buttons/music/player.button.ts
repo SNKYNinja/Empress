@@ -1,7 +1,7 @@
-import { DiscordClient } from "bot";
+import { DiscordClient } from "@/bot";
 import { ButtonInteraction } from "discord.js";
-import { buildPlayerControls } from "../../../services/poru.js";
-import { ButtonInterface } from "typings";
+import { buildPlayerControls } from "@/lib/poru";
+import { ButtonInterface } from "@/typings";
 
 const button: ButtonInterface = {
     id: "p/p",
@@ -13,7 +13,7 @@ const button: ButtonInterface = {
 
         if (player.message) {
             const [controlRow, secondaryRow] = buildPlayerControls(player);
-            await player.message.edit({ components: [controlRow, secondaryRow] }).catch(() => {});
+            await player.message.edit({ components: [controlRow, secondaryRow] }).catch(() => { });
         }
 
         await interaction.deferUpdate();

@@ -10,7 +10,7 @@ import {
     StringSelectMenuInteraction,
     userMention,
 } from "discord.js";
-import { Icons } from "../constants/icons.js";
+import { Icons } from "@/constants/icons";
 
 type AnyInteraction = ChatInputCommandInteraction | ButtonInteraction | StringSelectMenuInteraction;
 
