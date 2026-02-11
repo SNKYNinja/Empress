@@ -1,8 +1,9 @@
 import { DiscordClient } from "@/bot";
-import { ButtonInteraction, Events, NewsChannel, TextChannel, ThreadChannel } from "discord.js";
+import { ButtonInteraction, Events, MessageFlags, NewsChannel, TextChannel, ThreadChannel } from "discord.js";
 import { EventInterface, ButtonInterface } from "@/typings";
 
 import { config } from "@/config";
+import { prisma } from "@/lib/db";
 import { Logger, EmbedHandler } from "@/lib/index";
 
 import { RateLimiter } from "discord.js-rate-limiter";
@@ -27,7 +28,7 @@ const validateFlags = (
     const sendError = (message: string): false => {
         interaction.reply({
             embeds: [EmbedHandler.error(interaction, message)],
-            ephemeral: true,
+            flags: MessageFlags.Ephemeral,
         });
         return false;
     };
@@ -89,6 +90,13 @@ const event: EventInterface = {
         }
 
         if (!validateFlags(interaction, client, button)) return;
+
+        // Ensure user exists in the database
+        await prisma.user.upsert({
+            where: { id: interaction.user.id },
+            create: { id: interaction.user.id },
+            update: {},
+        });
 
         try {
             button.execute(interaction, client);

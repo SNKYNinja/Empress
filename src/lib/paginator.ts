@@ -7,6 +7,7 @@ import {
     ChatInputCommandInteraction,
     ComponentType,
     EmbedBuilder,
+    MessageFlags,
     StringSelectMenuInteraction,
     userMention,
 } from "discord.js";
@@ -94,16 +95,19 @@ class EmbedPaginator {
 
         this.setFooterForCurrent(id);
 
-        const replyOptions = {
+        const baseOptions = {
             embeds: [this.embeds[this.pageByMessageId[id]]],
             components: [this.buildControls(id)],
-            ephemeral: this.ephemeral,
-        } as const;
+        };
 
         if (this.deferReplied) {
-            await this.interaction.editReply(replyOptions);
+            await this.interaction.editReply(baseOptions);
         } else {
-            await this.interaction.reply(replyOptions);
+            await this.interaction.reply(
+                this.ephemeral
+                    ? { ...baseOptions, flags: MessageFlags.Ephemeral }
+                    : baseOptions
+            );
         }
 
         const message = await this.interaction.fetchReply();
@@ -124,7 +128,7 @@ class EmbedPaginator {
                         )}`
                     )
                     .setColor(0xed4245);
-                await button.reply({ embeds: [invalid], ephemeral: true });
+                await button.reply({ embeds: [invalid], flags: MessageFlags.Ephemeral });
                 return;
             }
 

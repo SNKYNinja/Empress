@@ -3,6 +3,7 @@ import {
     AutocompleteInteraction,
     ChatInputCommandInteraction,
     Events,
+    MessageFlags,
     NewsChannel,
     TextChannel,
     ThreadChannel,
@@ -14,6 +15,7 @@ import { Logger, EmbedHandler } from "@/lib/index";
 
 import { DiscordLimits } from "@/constants/index";
 import { config } from "@/config";
+import { prisma } from "@/lib/db";
 
 import { RateLimiter } from "discord.js-rate-limiter";
 const rateLimiter = new RateLimiter(
@@ -36,7 +38,7 @@ const validateCommandFlags = (
     const sendError = (message: string): false => {
         interaction.reply({
             embeds: [EmbedHandler.error(interaction, message)],
-            ephemeral: true,
+            flags: MessageFlags.Ephemeral,
         });
         return false;
     };
@@ -104,6 +106,13 @@ const event: EventInterface = {
             if (limited) return;
 
             try {
+                // Ensure user exists in the database
+                await prisma.user.upsert({
+                    where: { id: interaction.user.id },
+                    create: { id: interaction.user.id },
+                    update: {},
+                });
+
                 // Validate command flags
                 const commandToValidate = subCmdFile || command;
                 if (!validateCommandFlags(interaction, client, commandToValidate)) return;

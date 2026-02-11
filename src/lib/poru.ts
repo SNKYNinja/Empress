@@ -79,8 +79,8 @@ export function buildPlayerControls(
             .setEmoji(Icons.MUSIC.shuffle)
             .setStyle(ButtonStyle.Secondary),
         new ButtonBuilder()
-            .setCustomId("like")
-            .setEmoji(Icons.MUSIC.like)
+            .setCustomId("save")
+            .setEmoji(Icons.MUSIC.save)
             .setStyle(ButtonStyle.Secondary),
         new ButtonBuilder()
             .setCustomId("repeat")

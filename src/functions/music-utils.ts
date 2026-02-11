@@ -1,9 +1,10 @@
 import type { DiscordClient } from "@/bot";
-import { type ButtonInteraction, type ChatInputCommandInteraction } from "discord.js";
+import { type ButtonInteraction, type ChatInputCommandInteraction, MessageFlags } from "discord.js";
 import { EmbedHandler } from "@/lib/index";
 import { Colors } from "@/constants/index";
 import { EmbedPaginator } from "@/lib/index";
 import { StringUtils } from "@/functions/utils";
+import { prisma } from "@/lib/db";
 
 // Shared utility functions for music operations
 export const MusicUtils = {
@@ -24,7 +25,7 @@ export const MusicUtils = {
                     iconURL: interaction.user.displayAvatarURL(),
                 },
             });
-            return interaction.reply({ embeds: [embed], ephemeral: true });
+            return interaction.reply({ embeds: [embed], flags: MessageFlags.Ephemeral });
         }
 
         await interaction.deferReply();
@@ -92,7 +93,7 @@ export const MusicUtils = {
 
         if (player.queue.length <= 1) {
             const embed = EmbedHandler.error(interaction, "*No tracks in the queue to shuffle!*");
-            return interaction.reply({ embeds: [embed], ephemeral: true });
+            return interaction.reply({ embeds: [embed], flags: MessageFlags.Ephemeral });
         }
 
         player.queue.shuffle();
@@ -119,7 +120,7 @@ export const MusicUtils = {
 
         if (!player.currentTrack?.info.isSeekable) {
             const embed = EmbedHandler.error(interaction, "*Track is not seekable!*");
-            return interaction.reply({ embeds: [embed], ephemeral: true });
+            return interaction.reply({ embeds: [embed], flags: MessageFlags.Ephemeral });
         }
 
         const embed = EmbedHandler.create({
@@ -158,5 +159,64 @@ export const MusicUtils = {
 
         player.skip();
         await interaction.reply({ embeds: [embed] });
+    },
+
+    async saveTrack(
+        interaction: ButtonInteraction | ChatInputCommandInteraction,
+        client: DiscordClient
+    ) {
+        const player = client.poru.players.get(interaction.guild!.id)!;
+
+        const { uri, title } = player.currentTrack!.info;
+
+        if (!uri) {
+            const embed = EmbedHandler.error(interaction, "*Track is not available to save!*");
+            return interaction.reply({ embeds: [embed], flags: MessageFlags.Ephemeral });
+        }
+
+        const existingTrack = await prisma.savedTrack.findUnique({
+            where: {
+                userId_url: {
+                    userId: interaction.user.id,
+                    url: uri,
+                }
+            },
+        });
+
+        if (existingTrack) {
+            await prisma.savedTrack.delete({ where: { id: existingTrack.id } });
+
+            const embed = EmbedHandler.create({
+                author: {
+                    name: interaction.user.username,
+                    iconURL: interaction.user.displayAvatarURL(),
+                },
+                description: `*Track Removed ― [${existingTrack.title}](${existingTrack.url})*`,
+                color: Colors.DISCORD.red,
+                timestamp: true,
+            });
+
+            return interaction.reply({ embeds: [embed], flags: MessageFlags.Ephemeral });
+        }
+
+        const savedTrack = await prisma.savedTrack.create({
+            data: {
+                title,
+                url: uri,
+                userId: interaction.user.id,
+            },
+        });
+
+        const embed = EmbedHandler.create({
+            author: {
+                name: interaction.user.username,
+                iconURL: interaction.user.displayAvatarURL(),
+            },
+            description: `*Track Saved ― [${savedTrack.title}](${savedTrack.url})*`,
+            color: Colors.DISCORD.green,
+            timestamp: true,
+        });
+
+        await interaction.reply({ embeds: [embed], flags: MessageFlags.Ephemeral });
     },
 };

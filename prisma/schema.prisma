@@ -16,4 +16,30 @@ datasource db {
 model Client {
   id     Int   @id @default(autoincrement())
   memory Int[]
+
+  @@map("clients")
+}
+
+model User {
+  id          String       @id
+  savedTracks SavedTrack[]
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+
+  @@map("users")
+}
+
+model SavedTrack {
+  id    String @id @default(uuid())
+  title String
+  url   String
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+
+  @@unique([userId, url])
+  @@index([userId])
+  @@map("saved_tracks")
 }

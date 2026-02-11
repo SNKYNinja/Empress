@@ -2,7 +2,6 @@ import type { DiscordClient } from "@/bot";
 import {
     type ChatInputCommandInteraction,
     InteractionContextType,
-    MessageFlags,
     PermissionFlagsBits,
     SlashCommandBuilder,
 } from "discord.js";
@@ -12,33 +11,34 @@ import { Colors } from "@/constants/index";
 
 const command: CommandInterface = {
     data: new SlashCommandBuilder()
-        .setName("clear-queue")
-        .setDescription("Remove all the tracks from the queue")
+        .setName("volume")
+        .setDescription("Change the volume of the current track")
         .setDefaultMemberPermissions(PermissionFlagsBits.SendMessages)
-        .setContexts(InteractionContextType.Guild),
+        .setContexts(InteractionContextType.Guild)
+        .addNumberOption((option) =>
+            option
+                .setName("volume")
+                .setDescription("The volume to set the player to")
+                .setRequired(true)
+                .setMinValue(0)
+                .setMaxValue(200)
+        ),
     player: true,
+    currentTrack: true,
     execute: async (interaction: ChatInputCommandInteraction, client: DiscordClient) => {
-        const player = client.poru.players.get(interaction.guild!.id)!;
+        const player = client.poru.players.get(interaction.guildId!)!;
+        const volume = interaction.options.getNumber("volume")!;
 
-        if (player.queue.length === 0) {
-            const embed = EmbedHandler.error(
-                interaction,
-                "*There are no tracks in the queue to clear!*"
-            );
-            return interaction.reply({ embeds: [embed], flags: MessageFlags.Ephemeral });
-        }
-
-        const trackCount = player.queue.length;
-        player.queue.clear();
+        player.setVolume(volume);
 
         const embed = EmbedHandler.create({
             author: {
-                name: interaction.user.displayName,
+                name: interaction.user.username,
                 iconURL: interaction.user.displayAvatarURL(),
             },
-            description: `*Cleared **${trackCount} track${trackCount > 1 ? "s" : ""}** from queue*`,
             color: Colors.ALL.blue,
-            timestamp: true,
+            description: `Volume set to \`${volume}\``,
+            timestamp: true
         });
 
         await interaction.reply({ embeds: [embed] });

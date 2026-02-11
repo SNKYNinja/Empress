@@ -107,8 +107,8 @@ export class Icons {
             id: "1415187972344778835",
             animated: false,
         },
-        like: {
-            name: "like",
+        save: {
+            name: "save",
             id: "1415188002681917450",
             animated: false,
         },
