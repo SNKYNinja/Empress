@@ -1,7 +1,7 @@
 {
   "name": "empress",
   "version": "2.0.0",
-  "description": "A blazing fast and multipurpose discord bot with wide range of features",
+  "description": "A blazing fast and multipurpose discord bot with a wide range of features",
   "main": "dist/bot.js",
   "type": "module",
   "scripts": {
